@@ -1,0 +1,34 @@
+﻿using System.Data.Common;
+
+namespace TouchTypingTrainerBackend.Entities
+{
+    /// <summary>
+    /// The testing material entity.
+    /// </summary>
+    public class TestingMaterial
+    {
+        /// <summary>
+        /// Testing material identifier.
+        /// </summary>
+        public int TestingMaterial_UID { get; set; }
+
+        /// <summary>
+        /// Testing material text resourse.
+        /// </summary>
+        public string Text { get; set; }
+
+        /// <summary>
+        /// Maps testing material.
+        /// </summary>
+        /// <param name="dr">A reader.</param>
+        /// <returns>Mapped testing material.</returns>
+        public static TestingMaterial Map(DbDataReader dr)
+        {
+            return new TestingMaterial
+            {
+                TestingMaterial_UID = dr.GetInt32(dr.GetOrdinal("TestingMaterial_UID")),
+                Text = dr.GetString(dr.GetOrdinal("Text"))
+            };
+        }
+    }
+}
