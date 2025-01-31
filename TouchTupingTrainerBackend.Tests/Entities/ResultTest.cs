@@ -4,7 +4,7 @@ using TouchTypingTrainerBackend.Entities;
 
 namespace TouchTupingTrainerBackend.Tests.Entities
 {
-    public class UserResultTest
+    public class ResultTest
     {
         [Fact]
         public void Map_ShouldReturnMappedUserResult()
@@ -56,16 +56,16 @@ namespace TouchTupingTrainerBackend.Tests.Entities
                 .Returns(expectedExerciseId);
 
             // Act
-            var userResult = UserResult.Map(rm.Object);
+            var userResult = Result.Map(rm.Object);
 
             // Assert
-            Assert.Equal(expectedId, userResult.UserResult_UID);
+            Assert.Equal(expectedId, userResult.Id);
             Assert.Equal(expectedAccuracy, userResult.Accuracy);
             Assert.Equal(expectedSpeed, userResult.Speed);
             Assert.Equal(expectedResultType, userResult.ResultType);
-            Assert.Equal(expectedUserId, userResult.UserFID);
-            Assert.Equal(expectedTestingMaterialId, userResult.TestingMaterialFID);
-            Assert.Equal(expectedExerciseId, userResult.ExerciseFID);
+            Assert.Equal(expectedUserId, userResult.UserId);
+            Assert.Equal(expectedTestingMaterialId, userResult.TestingMaterialId);
+            Assert.Equal(expectedExerciseId, userResult.ExerciseId);
         }
     }
 }

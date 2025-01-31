@@ -6,12 +6,12 @@ namespace TouchTypingTrainerBackend.Entities
     /// <summary>
     /// User course progress entity.
     /// </summary>
-    public class UserCourseProgress
+    public class Progress
     {
         /// <summary>
         /// User course progress identifier.
         /// </summary>
-        public int UserCourseProgress_UID { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Progress flag that indicates whether the course has been completed or not.
@@ -21,7 +21,7 @@ namespace TouchTypingTrainerBackend.Entities
         /// <summary>
         /// Related to progress current exercise identifier.
         /// </summary>
-        public int CurrentExerciseFID { get; set; }
+        public int CurrentExerciseId { get; set; }
 
         /// <summary>
         /// Related to progress current exercise.
@@ -31,7 +31,7 @@ namespace TouchTypingTrainerBackend.Entities
         /// <summary>
         /// Related to progress current lesson identifier.
         /// </summary>
-        public int CurrentLessonFID { get; set; }
+        public int CurrentLessonId { get; set; }
 
         /// <summary>
         /// Related to progress current lesson.
@@ -41,7 +41,7 @@ namespace TouchTypingTrainerBackend.Entities
         /// <summary>
         /// Related to progress course identifier.
         /// </summary>
-        public int CourseFID { get; set; }
+        public int CourseId { get; set; }
 
         /// <summary>
         /// Related to progress course.
@@ -63,15 +63,15 @@ namespace TouchTypingTrainerBackend.Entities
         /// </summary>
         /// <param name="dr">A reader.</param>
         /// <returns>Mapped UserCourseProgress.</returns>
-        public static UserCourseProgress Map(DbDataReader dr)
+        public static Progress Map(DbDataReader dr)
         {
-            return new UserCourseProgress
+            return new Progress
             {
-                UserCourseProgress_UID = dr.GetInt32(dr.GetOrdinal("UserCourseProgress_UID")),
+                Id = dr.GetInt32(dr.GetOrdinal("UserCourseProgress_UID")),
                 IsCompleted = dr.GetBoolean(dr.GetOrdinal("IsCompleted")),
-                CurrentExerciseFID = dr.GetInt32(dr.GetOrdinal("CurrentExerciseFID")),
-                CurrentLessonFID = dr.GetInt32(dr.GetOrdinal("CurrentLessonFID")),
-                CourseFID = dr.GetInt32(dr.GetOrdinal("CourseFID")),
+                CurrentExerciseId = dr.GetInt32(dr.GetOrdinal("CurrentExerciseFID")),
+                CurrentLessonId = dr.GetInt32(dr.GetOrdinal("CurrentLessonFID")),
+                CourseId = dr.GetInt32(dr.GetOrdinal("CourseFID")),
                 UserFID = dr.GetString(dr.GetOrdinal("UserFID"))
             };
         }

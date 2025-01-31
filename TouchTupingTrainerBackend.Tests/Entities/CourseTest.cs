@@ -35,7 +35,7 @@ namespace TouchTupingTrainerBackend.Tests.Entities
             var course = Course.Map(rm.Object);
 
             // assert
-            Assert.Equal(expectedId, course.Course_UID);
+            Assert.Equal(expectedId, course.Id);
             Assert.Equal(expectedTitle, course.Title);
             Assert.Equal(expectedDescription, course.Description);
         }

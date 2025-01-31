@@ -10,7 +10,7 @@ namespace TouchTypingTrainerBackend.Entities
         /// <summary>
         /// Lesson identifier.
         /// </summary>
-        public int Lesson_UID { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Lesson title.
@@ -25,7 +25,7 @@ namespace TouchTypingTrainerBackend.Entities
         /// <summary>
         /// Related to lesson course identifier.
         /// </summary>
-        public int CourseFID { get; set; }
+        public int CourseId { get; set; }
 
         /// <summary>
         /// Related to lesson course.
@@ -46,10 +46,10 @@ namespace TouchTypingTrainerBackend.Entities
         {
             return new Lesson
             {
-                Lesson_UID = dr.GetInt32(dr.GetOrdinal("Lesson_UID")),
+                Id = dr.GetInt32(dr.GetOrdinal("Lesson_UID")),
                 Title = dr.GetString(dr.GetOrdinal("Title")),
                 Description = dr.GetString(dr.GetOrdinal("Description")),
-                CourseFID = dr.GetInt32(dr.GetOrdinal("CourseFID"))
+                CourseId = dr.GetInt32(dr.GetOrdinal("CourseFID"))
             };
         }
     }

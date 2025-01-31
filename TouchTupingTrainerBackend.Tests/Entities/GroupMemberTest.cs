@@ -4,7 +4,7 @@ using TouchTypingTrainerBackend.Entities;
 
 namespace TouchTupingTrainerBackend.Tests.Entities
 {
-    public class GroupAdvisorParticipantTest
+    public class GroupMemberTest
     {
         [Fact]
         public void Map_ShouldReturnMappedGroupAdvisorParticipant()
@@ -38,13 +38,13 @@ namespace TouchTupingTrainerBackend.Tests.Entities
                 .Returns(expectedGroupId);
 
             // Act
-            var groupAP = GroupAdvisorParticipant.Map(rm.Object);
+            var groupAP = GroupMember.Map(rm.Object);
 
             // Assert
-            Assert.Equal(expectedId, groupAP.GroupAdvisorParticipant_UID);
-            Assert.Equal(expectedAdvizorId, groupAP.AdvisorUserFID);
-            Assert.Equal(expectedParticipantId, groupAP.ParticipantUserFID);
-            Assert.Equal(expectedGroupId, groupAP.GroupFID);
+            Assert.Equal(expectedId, groupAP.Id);
+            Assert.Equal(expectedAdvizorId, groupAP.AdvisorId);
+            Assert.Equal(expectedParticipantId, groupAP.ParticipantId);
+            Assert.Equal(expectedGroupId, groupAP.GroupId);
         }
     }
 }

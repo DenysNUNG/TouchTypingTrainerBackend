@@ -4,7 +4,7 @@ using TouchTypingTrainerBackend.Entities;
 
 namespace TouchTupingTrainerBackend.Tests.Entities
 {
-    public class UserCourseProgressTest
+    public class ProgressTest
     {
         [Fact]
         public void Map_ShouldReturnMappedUserCourseProgress()
@@ -50,14 +50,14 @@ namespace TouchTupingTrainerBackend.Tests.Entities
                 .Returns(expectedUserId);
 
             // Act
-            var progress = UserCourseProgress.Map(rm.Object);
+            var progress = Progress.Map(rm.Object);
 
             // Assert
-            Assert.Equal(expectedId, progress.UserCourseProgress_UID);
+            Assert.Equal(expectedId, progress.Id);
             Assert.Equal(expetedIsCompleted, progress.IsCompleted);
-            Assert.Equal(expectedCurrentExerciseId, progress.CurrentExerciseFID);
-            Assert.Equal(expectedCurrentLessonId, progress.CurrentLessonFID);
-            Assert.Equal(expectedCourseId, progress.CourseFID);
+            Assert.Equal(expectedCurrentExerciseId, progress.CurrentExerciseId);
+            Assert.Equal(expectedCurrentLessonId, progress.CurrentLessonId);
+            Assert.Equal(expectedCourseId, progress.CourseId);
             Assert.Equal(expectedUserId, progress.UserFID);
         }
     }

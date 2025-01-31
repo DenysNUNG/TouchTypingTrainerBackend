@@ -28,7 +28,7 @@ namespace TouchTupingTrainerBackend.Tests.Entities
             var testingMaterial = TestingMaterial.Map(rm.Object);
 
             // Assert
-            Assert.Equal(expectedId, testingMaterial.TestingMaterial_UID);
+            Assert.Equal(expectedId, testingMaterial.Id);
             Assert.Equal(expectedText, testingMaterial.Text);
         }
     }

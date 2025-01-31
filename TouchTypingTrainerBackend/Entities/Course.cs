@@ -10,7 +10,7 @@ namespace TouchTypingTrainerBackend.Entities
         /// <summary>
         /// Course identifier.
         /// </summary>
-        public int Course_UID { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Course title.
@@ -36,7 +36,7 @@ namespace TouchTypingTrainerBackend.Entities
         {
             return new Course
             {
-                Course_UID = dr.GetInt32(dr.GetOrdinal("Course_UID")),
+                Id = dr.GetInt32(dr.GetOrdinal("Course_UID")),
                 Title = dr.GetString(dr.GetOrdinal("Title")),
                 Description = dr.GetString(dr.GetOrdinal("Description"))
             };

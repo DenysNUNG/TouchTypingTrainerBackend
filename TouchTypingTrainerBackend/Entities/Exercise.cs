@@ -10,7 +10,7 @@ namespace TouchTypingTrainerBackend.Entities
         /// <summary>
         /// Exercise identifier.
         /// </summary>
-        public int Exercise_UID { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Exercise title.
@@ -25,7 +25,7 @@ namespace TouchTypingTrainerBackend.Entities
         /// <summary>
         /// Related to exercise lesson identifier.
         /// </summary>
-        public int LessonFID { get; set; }
+        public int LessonId { get; set; }
 
         /// <summary>
         /// Related to exercise lesson.
@@ -41,10 +41,10 @@ namespace TouchTypingTrainerBackend.Entities
         {
             return new Exercise
             {
-                Exercise_UID = dr.GetInt32(dr.GetOrdinal("Exercise_UID")),
+                Id = dr.GetInt32(dr.GetOrdinal("Exercise_UID")),
                 Title = dr.GetString(dr.GetOrdinal("Title")),
                 StudySet = dr.GetString(dr.GetOrdinal("StudySet")),
-                LessonFID = dr.GetInt32(dr.GetOrdinal("LessonFID"))
+                LessonId = dr.GetInt32(dr.GetOrdinal("LessonFID"))
             };
         }
     }

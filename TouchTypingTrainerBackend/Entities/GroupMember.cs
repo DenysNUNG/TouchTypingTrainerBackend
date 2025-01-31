@@ -4,19 +4,19 @@ using System.Data.Common;
 namespace TouchTypingTrainerBackend.Entities
 {
     /// <summary>
-    /// Lnk group entity for advisor and participants.
+    /// Lnk group entity for advisors and participants.
     /// </summary>
-    public class GroupAdvisorParticipant
+    public class GroupMember
     {
         /// <summary>
         /// Lnk group advisor participant identifier.
         /// </summary>
-        public int GroupAdvisorParticipant_UID { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Lnk group advisor identifier.
         /// </summary>
-        public string AdvisorUserFID { get; set; }
+        public string AdvisorId { get; set; }
 
         /// <summary>
         /// Lnk group advisor.
@@ -26,7 +26,7 @@ namespace TouchTypingTrainerBackend.Entities
         /// <summary>
         /// Lnk group participant identifier.
         /// </summary>
-        public string ParticipantUserFID { get; set; }
+        public string ParticipantId { get; set; }
 
         /// <summary>
         /// Lnk group participant.
@@ -36,7 +36,7 @@ namespace TouchTypingTrainerBackend.Entities
         /// <summary>
         /// Lnk group identifier.
         /// </summary>
-        public int GroupFID { get; set; }
+        public int GroupId { get; set; }
 
         /// <summary>
         /// Lnk group.
@@ -48,14 +48,14 @@ namespace TouchTypingTrainerBackend.Entities
         /// </summary>
         /// <param name="dr">A reader.</param>
         /// <returns>Mapped GroupAdvisorParticipant.</returns>
-        public static GroupAdvisorParticipant Map(DbDataReader dr)
+        public static GroupMember Map(DbDataReader dr)
         {
-            return new GroupAdvisorParticipant
+            return new GroupMember
             {
-                GroupAdvisorParticipant_UID = dr.GetInt32(dr.GetOrdinal("GroupAdvisorParticipant_UID")),
-                AdvisorUserFID = dr.GetString(dr.GetOrdinal("AdvisorUserFID")),
-                ParticipantUserFID = dr.GetString(dr.GetOrdinal("ParticipantUserFID")),
-                GroupFID = dr.GetInt32(dr.GetOrdinal("GroupFID"))
+                Id = dr.GetInt32(dr.GetOrdinal("GroupAdvisorParticipant_UID")),
+                AdvisorId = dr.GetString(dr.GetOrdinal("AdvisorUserFID")),
+                ParticipantId = dr.GetString(dr.GetOrdinal("ParticipantUserFID")),
+                GroupId = dr.GetInt32(dr.GetOrdinal("GroupFID"))
             };
         }
     }

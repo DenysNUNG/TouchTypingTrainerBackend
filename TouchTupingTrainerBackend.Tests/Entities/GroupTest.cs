@@ -29,7 +29,7 @@ namespace TouchTupingTrainerBackend.Tests.Entities
             var group = Group.Map(rm.Object);
 
             // Assert
-            Assert.Equal(expectedId, group.Group_UID);
+            Assert.Equal(expectedId, group.Id);
             Assert.Equal(expectedName, group.Name);
         }
     }

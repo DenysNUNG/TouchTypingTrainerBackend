@@ -6,12 +6,12 @@ namespace TouchTypingTrainerBackend.Entities
     /// <summary>
     /// User result entity.
     /// </summary>
-    public class UserResult
+    public class Result
     {
         /// <summary>
         /// User result identifier.
         /// </summary>
-        public int UserResult_UID { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Result accuracy.
@@ -32,7 +32,7 @@ namespace TouchTypingTrainerBackend.Entities
         /// <summary>
         /// Related to result user identifier.
         /// </summary>
-        public string UserFID { get; set; }
+        public string UserId { get; set; }
 
         /// <summary>
         /// Related to result user.
@@ -42,7 +42,7 @@ namespace TouchTypingTrainerBackend.Entities
         /// <summary>
         /// Related to result testing material identifier.
         /// </summary>
-        public int TestingMaterialFID { get; set; }
+        public int TestingMaterialId { get; set; }
 
         /// <summary>
         /// Related to result testing material.
@@ -52,7 +52,7 @@ namespace TouchTypingTrainerBackend.Entities
         /// <summary>
         /// Related to result exercise identifier.
         /// </summary>
-        public int ExerciseFID { get; set; }
+        public int ExerciseId { get; set; }
 
         /// <summary>
         /// Related to result exercise.
@@ -64,17 +64,17 @@ namespace TouchTypingTrainerBackend.Entities
         /// </summary>
         /// <param name="dr">A reader.</param>
         /// <returns>Mapped UserResult.</returns>
-        public static UserResult Map(DbDataReader dr)
+        public static Result Map(DbDataReader dr)
         {
-            return new UserResult
+            return new Result
             {
-                UserResult_UID = dr.GetInt32(dr.GetOrdinal("UserResult_UID")),
+                Id = dr.GetInt32(dr.GetOrdinal("UserResult_UID")),
                 Accuracy = dr.GetFloat(dr.GetOrdinal("Accuracy")),
                 Speed = dr.GetInt32(dr.GetOrdinal("Speed")),
                 ResultType = dr.GetBoolean(dr.GetOrdinal("ResultType")),
-                UserFID = dr.GetString(dr.GetOrdinal("UserFID")),
-                TestingMaterialFID = dr.GetInt32(dr.GetOrdinal("TestingMaterialFID")),
-                ExerciseFID = dr.GetInt32(dr.GetOrdinal("ExerciseFID"))
+                UserId = dr.GetString(dr.GetOrdinal("UserFID")),
+                TestingMaterialId = dr.GetInt32(dr.GetOrdinal("TestingMaterialFID")),
+                ExerciseId = dr.GetInt32(dr.GetOrdinal("ExerciseFID"))
             };
         }
     }

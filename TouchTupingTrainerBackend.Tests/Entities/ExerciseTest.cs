@@ -41,10 +41,10 @@ namespace TouchTupingTrainerBackend.Tests.Entities
             var exercise = Exercise.Map(rm.Object);
 
             // Assert
-            Assert.Equal(expectedId, exercise.Exercise_UID);
+            Assert.Equal(expectedId, exercise.Id);
             Assert.Equal(expectedTitle, exercise.Title);
             Assert.Equal(expectedStudySet, exercise.StudySet);
-            Assert.Equal(expectedLessonId, exercise.LessonFID);
+            Assert.Equal(expectedLessonId, exercise.LessonId);
         }
     }
 }

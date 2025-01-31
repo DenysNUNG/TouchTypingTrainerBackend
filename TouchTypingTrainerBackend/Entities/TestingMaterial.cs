@@ -10,7 +10,7 @@ namespace TouchTypingTrainerBackend.Entities
         /// <summary>
         /// Testing material identifier.
         /// </summary>
-        public int TestingMaterial_UID { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Testing material text resourse.
@@ -26,7 +26,7 @@ namespace TouchTypingTrainerBackend.Entities
         {
             return new TestingMaterial
             {
-                TestingMaterial_UID = dr.GetInt32(dr.GetOrdinal("TestingMaterial_UID")),
+                Id = dr.GetInt32(dr.GetOrdinal("TestingMaterial_UID")),
                 Text = dr.GetString(dr.GetOrdinal("Text"))
             };
         }

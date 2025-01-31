@@ -10,7 +10,7 @@ namespace TouchTypingTrainerBackend.Entities
         /// <summary>
         /// Group identifier.
         /// </summary>
-        public int Group_UID { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Group name.
@@ -26,7 +26,7 @@ namespace TouchTypingTrainerBackend.Entities
         {
             return new Group
             {
-                Group_UID = dr.GetInt32(dr.GetOrdinal("Group_UID")),
+                Id = dr.GetInt32(dr.GetOrdinal("Group_UID")),
                 Name = dr.GetString(dr.GetOrdinal("Name"))
             };
         }
