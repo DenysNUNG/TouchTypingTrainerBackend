@@ -1,11 +1,19 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TouchTypingTrainerBackend.Data;
+using TouchTypingTrainerBackend.Helpers;
+using TouchTypingTrainerBackend.Repositories;
+using TouchTypingTrainerBackend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("Local");
 
 // Add services to the container.
+builder.Services.AddTransient<SprocHelper>(p =>
+    new SprocHelper(connectionString));
+builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+builder.Services.AddScoped<ITypingService, TypingService>();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -38,5 +46,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapIdentityApi<IdentityUser>();
+
+app.MapControllers();
 
 app.Run();
