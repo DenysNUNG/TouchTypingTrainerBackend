@@ -4,15 +4,26 @@ using TouchTypingTrainerBackend.Helpers;
 
 namespace TouchTypingTrainerBackend.Repositories
 {
+    /// <summary>
+    /// Course entity repository.
+    /// </summary>
     public class CourseRepository : ICourseRepository
     {
+        /// <summary>
+        /// A stored procedures helper.
+        /// </summary>
         readonly private SprocHelper _sh;
 
+        /// <summary>
+        /// DI constructor.
+        /// </summary>
+        /// <param name="sprocHelper">A stored procedures helper.</param>
         public CourseRepository(SprocHelper sprocHelper)
         {
             _sh = sprocHelper;
         }
 
+        /// <inheritdoc />
         public async Task<Course> GetCourseById(int id,
             bool IncludeLessonsWithExercises)
         {
@@ -68,6 +79,7 @@ namespace TouchTypingTrainerBackend.Repositories
             return course;
         }
 
+        /// <inheritdoc />
         public async Task<List<Course>> GetCourses()
         {
             var sprocName = "dbo.SelectAllCourses";
