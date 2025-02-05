@@ -10,7 +10,7 @@ namespace TouchTypingTrainerBackend.Repositories
         /// <summary>
         /// Gets all courses.
         /// </summary>
-        Task<List<Course>> GetCourses();
+        Task<List<Course>> GetCoursesAsync();
 
         /// <summary>
         /// Gets course by id.
@@ -18,6 +18,6 @@ namespace TouchTypingTrainerBackend.Repositories
         /// <param name="id">An identifier</param>
         /// <param name="includeLessonsWithExercises">A flag that indicates whether
         /// include lessons with exercises or not.</param>
-        Task<Course> GetCourseById(int id, bool includeLessonsWithExercises);
+        Task<Course> GetCourseByIdAsync(int id, bool includeLessonsWithExercises);
     }
 }

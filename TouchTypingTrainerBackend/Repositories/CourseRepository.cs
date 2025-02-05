@@ -12,19 +12,19 @@ namespace TouchTypingTrainerBackend.Repositories
         /// <summary>
         /// A stored procedures helper.
         /// </summary>
-        readonly private SprocHelper _sh;
+        readonly private ISprocHelper _sh;
 
         /// <summary>
         /// DI constructor.
         /// </summary>
         /// <param name="sprocHelper">A stored procedures helper.</param>
-        public CourseRepository(SprocHelper sprocHelper)
+        public CourseRepository(ISprocHelper sprocHelper)
         {
             _sh = sprocHelper;
         }
 
         /// <inheritdoc />
-        public async Task<Course> GetCourseById(int id,
+        public async Task<Course> GetCourseByIdAsync(int id,
             bool IncludeLessonsWithExercises)
         {
             var sprocName = "dbo.SelectCourseById";
@@ -80,7 +80,7 @@ namespace TouchTypingTrainerBackend.Repositories
         }
 
         /// <inheritdoc />
-        public async Task<List<Course>> GetCourses()
+        public async Task<List<Course>> GetCoursesAsync()
         {
             var sprocName = "dbo.SelectAllCourses";
             using var dr = await _sh.ExecuteReaderAsync(sprocName, null);
