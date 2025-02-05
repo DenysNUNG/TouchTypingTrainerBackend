@@ -1,13 +1,14 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.IdentityModel.Tokens;
 using System.Data;
+using System.Data.Common;
 
 namespace TouchTypingTrainerBackend.Helpers
 {
     /// <summary>
     /// Helps repositories to deal with stored procedures.
     /// </summary>
-    public class SprocHelper : IDisposable
+    public class SprocHelper : IDisposable, ISprocHelper
     {
         /// <summary>
         /// Sql connection.
@@ -38,9 +39,7 @@ namespace TouchTypingTrainerBackend.Helpers
             _cnn = new SqlConnection(connectionString);
         }
 
-        /// <summary>
-        /// Disposes the resources used by the SprocHelper.
-        /// </summary>
+        /// <inheritdoc />
         public void Dispose()
         {
             Dispose(true);
@@ -76,12 +75,8 @@ namespace TouchTypingTrainerBackend.Helpers
             Dispose(false);
         }
 
-        /// <summary>
-        /// Executes parametrized or non-parametrized stored procedure.
-        /// </summary>
-        /// <param name="sprocName">Stored procedure name.</param>
-        /// <param name="parameters">Sql-parameters.</param>
-        public async Task<SqlDataReader> ExecuteReaderAsync(string sprocName,
+        /// <inheritdoc />
+        public async Task<DbDataReader> ExecuteReaderAsync(string sprocName,
             SqlParameter[] parameters)
         {
             await _cnn.OpenAsync();
