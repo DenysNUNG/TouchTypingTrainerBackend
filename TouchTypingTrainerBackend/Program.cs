@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("Local");
 
 // Add services to the container.
-builder.Services.AddTransient<SprocHelper>(p =>
+builder.Services.AddTransient<ISprocHelper, SprocHelper>(p =>
     new SprocHelper(connectionString));
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 builder.Services.AddScoped<ITypingService, TypingService>();
