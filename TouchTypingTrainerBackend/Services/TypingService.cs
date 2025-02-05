@@ -22,13 +22,13 @@ namespace TouchTypingTrainerBackend.Services
         /// <inheritdoc />
         public async Task<Course> GetCourseById(int id, bool includeLessonsWithExercises)
         {
-            return await _repo.GetCourseById(id, includeLessonsWithExercises);
+            return await _repo.GetCourseByIdAsync(id, includeLessonsWithExercises);
         }
 
         /// <inheritdoc />
         public async Task<List<Course>> GetCourses()
         {
-            return await _repo.GetCourses();
+            return await _repo.GetCoursesAsync();
         }
     }
 }
