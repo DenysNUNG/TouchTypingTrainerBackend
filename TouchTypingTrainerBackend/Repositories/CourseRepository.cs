@@ -49,30 +49,27 @@ namespace TouchTypingTrainerBackend.Repositories
             if (await dr.NextResultAsync())
             {
                 List<Lesson> lessons = new List<Lesson>();
+                Lesson currentLesson = default(Lesson);
 
                 while (await dr.ReadAsync())
                 {
                     var lesson = Lesson.Map(dr);
-                    lessons.Add(lesson);
-                }
 
-                if (await dr.NextResultAsync())
-                {
-                    List<Exercise> exercises = new List<Exercise>();
+                    if (currentLesson == default(Lesson) || currentLesson.Id != lesson.Id)
+                    {
+                        currentLesson = lesson;
+                        lessons.Add(currentLesson);
+                    }
 
-                    while (await dr.ReadAsync())
+                    var exerciseIdIndex = dr.GetOrdinal("Exercise_UID");
+
+                    if (!dr.IsDBNull(exerciseIdIndex))
                     {
                         var exercise = Exercise.Map(dr);
-                        exercises.Add(exercise);
-                    }
-
-                    foreach (var lesson in lessons)
-                    {
-                        lesson.Exercises = exercises
-                            .Where(e => e.LessonId == lesson.Id)
-                            .ToList();
+                        currentLesson.Exercises.Add(exercise);
                     }
                 }
+
                 course.Lessons = lessons;
             }
 

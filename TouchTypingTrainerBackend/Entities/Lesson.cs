@@ -44,13 +44,32 @@ namespace TouchTypingTrainerBackend.Entities
         /// <returns>Mapped lesson.</returns>
         public static Lesson Map(DbDataReader dr)
         {
+            string titleColumn = "Title";
+
+            try 
+            {
+                dr.GetOrdinal(titleColumn);
+            }
+            catch (IndexOutOfRangeException)
+            {
+                titleColumn = "Lesson_Title";
+            }
+
             return new Lesson
             {
                 Id = dr.GetInt32(dr.GetOrdinal("Lesson_UID")),
-                Title = dr.GetString(dr.GetOrdinal("Title")),
+                Title = dr.GetString(dr.GetOrdinal(titleColumn)),
                 Description = dr.GetString(dr.GetOrdinal("Description")),
                 CourseId = dr.GetInt32(dr.GetOrdinal("CourseFID"))
             };
+        }
+
+        /// <summary>
+        /// Initialization constructor.
+        /// </summary>
+        public Lesson()
+        {
+            Exercises = new List<Exercise>();
         }
     }
 }

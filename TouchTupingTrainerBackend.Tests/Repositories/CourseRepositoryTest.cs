@@ -10,50 +10,17 @@ namespace TouchTupingTrainerBackend.Tests.Repositories
 {
     public class CourseRepositoryTest
     {
-        readonly private Mock<ISprocHelper> _hm;
-        readonly private Course _targetCourseWithoutInclude;
-        readonly private Course _targetCourseWithInclude;
-        readonly private List<Course> _targetCourses;
-
-        public CourseRepositoryTest()
+        [Fact]
+        public async Task GetCourses_ShouldReturnCollectionOfCoursesFromDb()
         {
-            _hm = new Mock<ISprocHelper>();
+            // arrange
+            var sprocName = "dbo.SelectCourseById";
+            var parameters = Array.Empty<SqlParameter>();
+            var hm = new Mock<ISprocHelper>();
+            var rm = new Mock<DbDataReader>();
+            var index = -1;
 
-            _targetCourseWithoutInclude = new Course()
-            {
-                Id = 1,
-                Title = "qwerty",
-                Description = "layout qwerty (english)"
-            };
-
-            _targetCourseWithInclude = new Course()
-            {
-                Id = 1,
-                Title = "qwerty",
-                Description = "layout qwerty (english)",
-                Lessons = new List<Lesson>()
-                {
-                    new Lesson()
-                    {
-                        Id = 1,
-                        Title = "Index keys",
-                        Description = "This lesson will help you to master base ASDF JKL: keys",
-                        CourseId = 1,
-                        Exercises = new List<Exercise>()
-                        {
-                            new Exercise()
-                            {
-                                Id = 1,
-                                Title = "Exercise 1, keys F and J",
-                                StudySet = "fj jf fj fj jf fj ffjf fjjf jfjj",
-                                LessonId = 1
-                            }
-                        }
-                    }
-                }
-            };
-
-            _targetCourses = new List<Course>()
+            var expectedCourses = new List<Course>()
             {
                 new Course()
                 {
@@ -74,17 +41,6 @@ namespace TouchTupingTrainerBackend.Tests.Repositories
                     Description = "layout qwerty (azerty)",
                 }
             };
-        }
-
-        [Fact]
-        public async Task GetCourses_ShouldReturnCollectionOfCoursesFromDb()
-        {
-            // arrange
-            var sprocName = "dbo.SelectCourseById";
-            var parameters = Array.Empty<SqlParameter>();
-            var hm = new Mock<ISprocHelper>();
-
-            var rm = new Mock<DbDataReader>();
 
             var data = new List<Dictionary<string, object>>
             {
@@ -107,8 +63,6 @@ namespace TouchTupingTrainerBackend.Tests.Repositories
                     { "Description", "layout qwerty (azerty)" }
                 }
             };
-
-            int index = -1;
 
             rm.Setup(r => r.ReadAsync(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(() => ++index < data.Count);
@@ -137,7 +91,7 @@ namespace TouchTupingTrainerBackend.Tests.Repositories
             rm.Setup(r => r.GetString(It.Is<int>(i => i == 2)))
                 .Returns(() => (string)data[index]["Description"]);
 
-            hm.Setup(h => h.ExecuteReaderAsync(It.IsAny<string>(), It.IsAny<SqlParameter[]>()))
+            hm.Setup(h => h.ExecuteReaderAsync(sprocName, parameters))
                 .ReturnsAsync(rm.Object);
 
             // act
@@ -145,14 +99,51 @@ namespace TouchTupingTrainerBackend.Tests.Repositories
             var result = await repo.GetCoursesAsync();
 
             // assert
-            result.Should().BeEquivalentTo(_targetCourses);
+            result.Should().BeEquivalentTo(expectedCourses);
         }
-
 
         [Fact]
         public async Task GetCourseByIdAsync_WithIncludes_ShouldReturnACourseWithLessonsAndExercises()
         {
             // arrange
+            var sprocName = "dbo.SelectCourseById";
+            var hm = new Mock<ISprocHelper>();
+            var rm = new Mock<DbDataReader>();
+            var index = -1;
+
+            var parameters = new SqlParameter[]
+            {
+                new SqlParameter("@CourseId", 1),
+                new SqlParameter("@IncludeLessonsWithExercises", true)
+            };
+
+            var expectedCourse = new Course()
+            {
+                Id = 1,
+                Title = "qwerty",
+                Description = "layout qwerty (english)",
+                Lessons = new List<Lesson>()
+                {
+                    new Lesson()
+                    {
+                        Id = 1,
+                        Title = "Index keys",
+                        Description = "This lesson will help you to master base ASDF JKL: keys",
+                        CourseId = 1,
+                        Exercises = new List<Exercise>()
+                        {
+                            new Exercise()
+                            {
+                                Id = 1,
+                                Title = "Exercise 1, keys F and J",
+                                StudySet = "fj jf fj fj jf fj ffjf fjjf jfjj",
+                                LessonId = 1
+                            }
+                        }
+                    }
+                }
+            };
+
             var coursesSet = new List<Dictionary<string, object>>
             {
                 new Dictionary<string, object>
@@ -162,27 +153,36 @@ namespace TouchTupingTrainerBackend.Tests.Repositories
                     { "Description", "layout qwerty (english)" }
                 }
             };
-                
+
             var LessonsSet = new List<Dictionary<string, object>>
             {
                 new Dictionary<string, object>
                 {
                     { "Lesson_UID", 1 },
-                    { "Title", "Index keys" },
+                    { "Lesson_Title", "Index keys" },
                     { "Description",  "This lesson will help you to master base ASDF JKL: keys" },
-                    { "CourseFID", 1 }
-                }
-            };
-                
-            var ExercisesSet = new List<Dictionary<string, object>>
-            {
-                new Dictionary<string, object>
-                {
+                    { "CourseFID", 1 },
                     { "Exercise_UID", 1 },
-                    { "Title", "Exercise 1, keys F and J" },
+                    { "Exercise_Title", "Exercise 1, keys F and J" },
                     { "StudySet", "fj jf fj fj jf fj ffjf fjjf jfjj" },
                     { "LessonFID", 1 }
                 }
+            };                         
+
+            // act
+
+            // assert
+        }
+
+        [Fact]
+        public async Task GetCourseByIdAsync_WithoutIncludes_ShouldReturnACourseWithLessonsAndExercises()
+        {
+            // arrange
+            var expectedCourse = new Course()
+            {
+                Id = 1,
+                Title = "qwerty",
+                Description = "layout qwerty (english)"
             };
 
             // act

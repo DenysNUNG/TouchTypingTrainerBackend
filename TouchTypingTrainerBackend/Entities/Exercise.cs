@@ -1,4 +1,6 @@
-﻿using System.Data.Common;
+﻿using System.Collections.Specialized;
+using System.Data.Common;
+using System.Runtime.CompilerServices;
 
 namespace TouchTypingTrainerBackend.Entities
 {
@@ -39,10 +41,21 @@ namespace TouchTypingTrainerBackend.Entities
         /// <returns>Mapped exercise.</returns>
         public static Exercise Map(DbDataReader dr)
         {
+            string titleColumn = "Title";
+
+            try
+            {
+                dr.GetOrdinal(titleColumn);
+            }
+            catch(IndexOutOfRangeException) 
+            {
+                titleColumn = "Exercise_Title";
+            }
+
             return new Exercise
             {
                 Id = dr.GetInt32(dr.GetOrdinal("Exercise_UID")),
-                Title = dr.GetString(dr.GetOrdinal("Title")),
+                Title = dr.GetString(dr.GetOrdinal(titleColumn)),
                 StudySet = dr.GetString(dr.GetOrdinal("StudySet")),
                 LessonId = dr.GetInt32(dr.GetOrdinal("LessonFID"))
             };
