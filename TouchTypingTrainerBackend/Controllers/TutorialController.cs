@@ -5,22 +5,22 @@ using TouchTypingTrainerBackend.Services;
 namespace TouchTypingTrainerBackend.Controllers
 {
     /// <summary>
-    /// Typing API controller.
+    /// Tutorial API controller.
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class TypingController : ControllerBase
+    public class TutorialController : ControllerBase
     {
         /// <summary>
-        /// Typing service.
+        /// Tutorial service.
         /// </summary>
-        readonly private ITypingService _service;
+        readonly private ITutorialService _service;
 
         /// <summary>
         /// DI constructor.
         /// </summary>
-        /// <param name="service">A typing service.</param>
-        public TypingController(ITypingService service)
+        /// <param name="service">A tutorial service.</param>
+        public TutorialController(ITutorialService service)
         {
             _service = service;
         }
@@ -31,7 +31,7 @@ namespace TouchTypingTrainerBackend.Controllers
         [HttpGet("get-courses")]
         public async Task<IActionResult> GetCourses()
         {
-            List<Course> courses = await _service.GetCourses();
+            List<Course> courses = await _service.GetCoursesAsync();
             return Ok(courses);
         }
 
@@ -42,7 +42,7 @@ namespace TouchTypingTrainerBackend.Controllers
         [HttpGet("get-course-with-lessons-and-exercises")]
         public async Task<IActionResult> GetCourseWithIncludes(int courseId)
         {
-            Course course = await _service.GetCourseById(courseId,
+            Course course = await _service.GetCourseByIdAsync(courseId,
                 includeLessonsWithExercises: true);
             return Ok(course);
         }
@@ -54,7 +54,7 @@ namespace TouchTypingTrainerBackend.Controllers
         [HttpGet("get-course")]
         public async Task<IActionResult> GetCourse(int courseId)
         {
-            Course course = await _service.GetCourseById(courseId,
+            Course course = await _service.GetCourseByIdAsync(courseId,
                 includeLessonsWithExercises: false);
             return Ok(course);
         }
