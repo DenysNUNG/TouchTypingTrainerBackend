@@ -19,5 +19,12 @@ namespace TouchTypingTrainerBackend.Services
         /// </summary>
         /// <param name="userId">A user identifier.</param>
         Task<List<TestingResult>> GetUserTestingResultsAsync(string userId);
+
+        /// <summary>
+        /// Gets current user exercise.
+        /// </summary>
+        /// <param name="userId">User identifier.</param>
+        /// <param name="courseId">Course idetifier.</param>
+        Task<Exercise> GetCurrentExercise(string userId, int courseId);
     }
 }

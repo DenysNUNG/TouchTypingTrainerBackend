@@ -13,12 +13,16 @@ namespace TouchTypingTrainerBackend.Services
         /// </summary>
         readonly private IUserResultRepository _resultRepo;
 
+        readonly private IProgressRepository _progressRepo;
+
         /// <summary>
         /// DI constructor.
         /// </summary>
-        public UserService(IUserResultRepository userResultRepository)
+        public UserService(IUserResultRepository userResultRepository,
+            IProgressRepository progressRepository)
         {
             _resultRepo = userResultRepository;
+            _progressRepo = progressRepository;
         }
 
         /// <inheritdoc />
@@ -31,6 +35,12 @@ namespace TouchTypingTrainerBackend.Services
         public async Task<List<TestingResult>> GetUserTestingResultsAsync(string userId)
         {
             return await _resultRepo.GetUserTestingResultsAsync(userId);
+        }
+
+        /// <inheritdoc />
+        public async Task<Exercise> GetCurrentExercise(string userId, int courseId)
+        {
+            return await _progressRepo.GetCurrentExercise(userId, courseId);
         }
     }
 }

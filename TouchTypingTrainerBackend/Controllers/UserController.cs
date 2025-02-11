@@ -41,7 +41,7 @@ namespace TouchTypingTrainerBackend.Controllers
         }
 
         /// <summary>
-        /// Get user-related testing results.
+        /// Gets user-related testing results.
         /// </summary>
         [HttpGet("get-testing-results")]
         public async Task<IActionResult> GetTestingResults()
@@ -51,6 +51,21 @@ namespace TouchTypingTrainerBackend.Controllers
             var results = await _userService.GetUserTestingResultsAsync(userId);
 
             return Ok(results);
+        }
+
+        /// <summary>
+        /// Gets current user exercise.
+        /// </summary>
+        /// <param name="courseId">Course identifier.</param>
+        [Authorize]
+        [HttpGet("get-current-exercise")]
+        public async Task<IActionResult> GetCurrentUserExercise(int courseId)
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var exercise = await _userService.GetCurrentExercise(userId, courseId);
+
+            return Ok(exercise);
         }
     }
 }
