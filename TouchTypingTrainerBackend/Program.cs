@@ -13,6 +13,8 @@ builder.Services.AddTransient<ISprocHelper, SprocHelper>(p =>
     new SprocHelper(connectionString));
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 builder.Services.AddScoped<ITypingService, TypingService>();
+builder.Services.AddScoped<IUserResultRepository, UserResultRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
