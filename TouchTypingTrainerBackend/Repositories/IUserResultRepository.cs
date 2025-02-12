@@ -3,7 +3,7 @@
 namespace TouchTypingTrainerBackend.Repositories
 {
     /// <summary>
-    /// Repository for UserResult entity.
+    /// UserResult entity repository.
     /// </summary>
     public interface IUserResultRepository
     {
@@ -15,7 +15,7 @@ namespace TouchTypingTrainerBackend.Repositories
         Task<List<LearningResult>> GetUserLearningResultsAsync(string userId, int courseId);
 
         /// <summary>
-        /// Gets testing results for user.
+        /// Gets user-related testing results.
         /// </summary>
         /// <param name="userId">A user identifier.</param>
         Task<List<TestingResult>> GetUserTestingResultsAsync(string userId);

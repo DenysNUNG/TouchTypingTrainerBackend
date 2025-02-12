@@ -3,7 +3,7 @@
 namespace TouchTypingTrainerBackend.Repositories
 {
     /// <summary>
-    /// Repository for TestingMaterial entity.
+    /// TestingMaterial entity repository.
     /// </summary>
     public interface ITestRepository
     {

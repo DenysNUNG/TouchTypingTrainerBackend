@@ -10,14 +10,13 @@ namespace TouchTypingTrainerBackend.Repositories
     public class CourseRepository : ICourseRepository
     {
         /// <summary>
-        /// A stored procedures helper.
+        /// Stored procedures helper.
         /// </summary>
         readonly private ISprocHelper _sh;
 
         /// <summary>
         /// DI constructor.
         /// </summary>
-        /// <param name="sprocHelper">A stored procedures helper.</param>
         public CourseRepository(ISprocHelper sprocHelper)
         {
             _sh = sprocHelper;
@@ -55,7 +54,8 @@ namespace TouchTypingTrainerBackend.Repositories
                 {
                     var lesson = Lesson.Map(dr);
 
-                    if (currentLesson == default(Lesson) || currentLesson.Id != lesson.Id)
+                    if (currentLesson == default(Lesson)
+                        || currentLesson.Id != lesson.Id)
                     {
                         currentLesson = lesson;
                         lessons.Add(currentLesson);

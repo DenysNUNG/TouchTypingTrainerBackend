@@ -26,7 +26,8 @@ namespace TouchTypingTrainerBackend.Services
         }
 
         /// <inheritdoc />
-        public async Task<List<LearningResult>> GetUserLearningResultsAsync(string userId, int courseId)
+        public async Task<List<LearningResult>> GetUserLearningResultsAsync(string userId,
+            int courseId)
         {
             return await _resultRepo.GetUserLearningResultsAsync(userId, courseId);
         }

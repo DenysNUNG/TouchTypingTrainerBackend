@@ -8,7 +8,7 @@ namespace TouchTypingTrainerBackend.Repositories
     public interface IProgressRepository
     {
         /// <summary>
-        /// Gets current user exercise.
+        /// Gets current user-related exercise.
         /// </summary>
         /// <param name="userId">User identifier.</param>
         /// <param name="courseId">Course idetifier.</param>

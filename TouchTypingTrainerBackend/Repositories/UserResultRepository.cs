@@ -5,7 +5,7 @@ using TouchTypingTrainerBackend.Helpers;
 namespace TouchTypingTrainerBackend.Repositories
 {
     /// <summary>
-    /// Repository for UserResult entity.
+    /// UserResult entity repository.
     /// </summary>
     public class UserResultRepository : IUserResultRepository
     {

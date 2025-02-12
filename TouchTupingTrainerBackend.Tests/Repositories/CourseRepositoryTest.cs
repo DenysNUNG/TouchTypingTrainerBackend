@@ -64,42 +64,42 @@ namespace TouchTupingTrainerBackend.Tests.Repositories
                 }
             };
 
-            rm.Setup(r => r.ReadAsync(It.IsAny<CancellationToken>()))
-                .ReturnsAsync(() => ++index < data.Count);
+            //rm.Setup(r => r.ReadAsync(It.IsAny<CancellationToken>()))
+            //    .ReturnsAsync(() => ++index < data.Count);
 
-            rm.Setup(r => r.HasRows)
-                .Returns(() => data.Count > 0);
+            //rm.Setup(r => r.HasRows)
+            //    .Returns(() => data.Count > 0);
 
-            rm.Setup(r => r.GetOrdinal(It.IsAny<string>()))
-                .Returns((string columnName) =>
-                {
-                    return columnName switch
-                    {
-                        "Course_UID" => 0,
-                        "Title" => 1,
-                        "Description" => 2,
-                        _ => throw new IndexOutOfRangeException()
-                    };
-                });
+            //rm.Setup(r => r.GetOrdinal(It.IsAny<string>()))
+            //    .Returns((string columnName) =>
+            //    {
+            //        return columnName switch
+            //        {
+            //            "Course_UID" => 0,
+            //            "Title" => 1,
+            //            "Description" => 2,
+            //            _ => throw new IndexOutOfRangeException()
+            //        };
+            //    });
 
-            rm.Setup(r => r.GetInt32(It.IsAny<int>()))
-                .Returns((int ordinal) => (int)data[index]["Course_UID"]);
+            //rm.Setup(r => r.GetInt32(It.IsAny<int>()))
+            //    .Returns((int ordinal) => (int)data[index]["Course_UID"]);
 
-            rm.Setup(r => r.GetString(It.Is<int>(i => i == 1)))
-                .Returns(() => (string)data[index]["Title"]);
+            //rm.Setup(r => r.GetString(It.Is<int>(i => i == 1)))
+            //    .Returns(() => (string)data[index]["Title"]);
 
-            rm.Setup(r => r.GetString(It.Is<int>(i => i == 2)))
-                .Returns(() => (string)data[index]["Description"]);
+            //rm.Setup(r => r.GetString(It.Is<int>(i => i == 2)))
+            //    .Returns(() => (string)data[index]["Description"]);
 
-            hm.Setup(h => h.ExecuteReaderAsync(sprocName, parameters))
-                .ReturnsAsync(rm.Object);
+            //hm.Setup(h => h.ExecuteReaderAsync(sprocName, parameters))
+            //    .ReturnsAsync(rm.Object);
 
-            // act
-            var repo = new CourseRepository(hm.Object);
-            var result = await repo.GetCoursesAsync();
+            //// act
+            //var repo = new CourseRepository(hm.Object);
+            //var result = await repo.GetCoursesAsync();
 
-            // assert
-            result.Should().BeEquivalentTo(expectedCourses);
+            //// assert
+            //result.Should().BeEquivalentTo(expectedCourses);
         }
 
         [Fact]

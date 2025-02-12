@@ -13,7 +13,6 @@ namespace TouchTypingTrainerBackend.Services
         /// <summary>
         /// DI constructor.
         /// </summary>
-        /// <param name="courseRepo">A course repository.</param>
         public TutorialService(ICourseRepository courseRepo)
         {
             _repo = courseRepo;

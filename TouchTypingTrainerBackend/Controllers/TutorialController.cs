@@ -19,7 +19,6 @@ namespace TouchTypingTrainerBackend.Controllers
         /// <summary>
         /// DI constructor.
         /// </summary>
-        /// <param name="service">A tutorial service.</param>
         public TutorialController(ITutorialService service)
         {
             _service = service;
@@ -38,24 +37,26 @@ namespace TouchTypingTrainerBackend.Controllers
         /// <summary>
         /// Returns a course by id. The course includes lessons with exercises.
         /// </summary>
-        /// <param name="courseId">A course id.</param>
+        /// <param name="courseId">A course identifier.</param>
         [HttpGet("get-course-with-lessons-and-exercises")]
         public async Task<IActionResult> GetCourseWithIncludes(int courseId)
         {
             Course course = await _service.GetCourseByIdAsync(courseId,
                 includeLessonsWithExercises: true);
+
             return Ok(course);
         }
 
         /// <summary>
         /// Returns a course by id.
         /// </summary>
-        /// <param name="courseId">A course id.</param>
+        /// <param name="courseId">A course identifier.</param>
         [HttpGet("get-course")]
         public async Task<IActionResult> GetCourse(int courseId)
         {
             Course course = await _service.GetCourseByIdAsync(courseId,
                 includeLessonsWithExercises: false);
+
             return Ok(course);
         }
     }

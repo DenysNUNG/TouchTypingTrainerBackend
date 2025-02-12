@@ -6,7 +6,7 @@ using TouchTypingTrainerBackend.Services;
 namespace TouchTypingTrainerBackend.Controllers
 {
     /// <summary>
-    /// User controller.
+    /// User API controller.
     /// </summary>
     [Authorize]
     [Route("api/[controller]")]
@@ -16,14 +16,14 @@ namespace TouchTypingTrainerBackend.Controllers
         /// <summary>
         /// User service.
         /// </summary>
-        readonly private IUserService _userService;
+        readonly private IUserService _us;
 
         /// <summary>
         /// DI constructor.
         /// </summary>
         public UserController(IUserService userService)
         {
-            _userService = userService;
+            _us = userService;
         }
 
         /// <summary>
@@ -33,9 +33,8 @@ namespace TouchTypingTrainerBackend.Controllers
         [HttpGet("get-learning-results")]
         public async Task<IActionResult> GetLearningResults(int courseId)
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            var results = await _userService.GetUserLearningResultsAsync(userId, courseId);
+            string userId = GetUserId();
+            var results = await _us.GetUserLearningResultsAsync(userId, courseId);
 
             return Ok(results);
         }
@@ -46,9 +45,8 @@ namespace TouchTypingTrainerBackend.Controllers
         [HttpGet("get-testing-results")]
         public async Task<IActionResult> GetTestingResults()
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            var results = await _userService.GetUserTestingResultsAsync(userId);
+            string userId = GetUserId();
+            var results = await _us.GetUserTestingResultsAsync(userId);
 
             return Ok(results);
         }
@@ -61,11 +59,18 @@ namespace TouchTypingTrainerBackend.Controllers
         [HttpGet("get-current-exercise")]
         public async Task<IActionResult> GetCurrentUserExercise(int courseId)
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            var exercise = await _userService.GetCurrentExercise(userId, courseId);
+            string userId = GetUserId();
+            var exercise = await _us.GetCurrentExercise(userId, courseId);
 
             return Ok(exercise);
+        }
+
+        /// <summary>
+        /// Gets current user identifier.
+        /// </summary>
+        private string GetUserId()
+        {
+            return User.FindFirstValue(ClaimTypes.NameIdentifier);
         }
     }
 }
