@@ -27,12 +27,12 @@ namespace TouchTypingTrainerBackend.Entities
         /// <summary>
         /// Related to exercise lesson identifier.
         /// </summary>
-        public int LessonId { get; set; }
+        public int? LessonId { get; set; }
 
         /// <summary>
         /// Related to exercise lesson.
         /// </summary>
-        public Lesson Lesson { get; set; }
+        public Lesson? Lesson { get; set; }
 
         /// <summary>
         /// Maps an exercise.

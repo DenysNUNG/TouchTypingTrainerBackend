@@ -1,11 +1,12 @@
 ﻿using System.Data.Common;
+using TouchTypingTrainerBackend.Models;
 
 namespace TouchTypingTrainerBackend.Entities
 {
     /// <summary>
     /// The user's testing result.
     /// </summary>
-    public class TestingResult
+    public class TestingResult : IUserResult
     {
         /// <summary>
         /// Testing result identifier.

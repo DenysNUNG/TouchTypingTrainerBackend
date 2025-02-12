@@ -17,6 +17,8 @@ builder.Services.AddScoped<IUserResultRepository, UserResultRepository>();
 builder.Services.AddScoped<IProgressRepository, ProgressRepository>();
 builder.Services.AddScoped<ITestRepository, TestRepository>();
 builder.Services.AddScoped<ITestService, TestService>();
+builder.Services.AddTransient<ICalcService, CalcService>();
+builder.Services.AddTransient<IUserService, UserService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -37,6 +39,8 @@ builder.Services.AddAuthentication()
 builder.Services.AddAuthorizationBuilder();
 
 builder.Services.AddControllers();
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

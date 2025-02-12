@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using TouchTypingTrainerBackend.Entities;
 using TouchTypingTrainerBackend.Services;
 
@@ -17,14 +16,28 @@ namespace TouchTypingTrainerBackend.Controllers
         /// <summary>
         /// Tutorial service.
         /// </summary>
-        readonly private ITutorialService _ts;
+        readonly private ITutorialService _tutorService;
+
+        /// <summary>
+        /// User performance calculation service.
+        /// </summary>
+        readonly private ICalcService _calcService;
+
+        /// <summary>
+        /// HttpContext user service.
+        /// </summary>
+        readonly private IUserService _userService;
 
         /// <summary>
         /// DI constructor.
         /// </summary>
-        public TutorialController(ITutorialService tutorialService)
+        public TutorialController(ITutorialService tutorialService,
+            ICalcService calcService,
+            IUserService userService)
         {
-            _ts = tutorialService;
+            _tutorService = tutorialService;
+            _calcService = calcService;
+            _userService = userService;
         }
 
         /// <summary>
@@ -33,7 +46,7 @@ namespace TouchTypingTrainerBackend.Controllers
         [HttpGet("get-courses")]
         public async Task<IActionResult> GetCourses()
         {
-            List<Course> courses = await _ts.GetCoursesAsync();
+            List<Course> courses = await _tutorService.GetCoursesAsync();
 
             return Ok(courses);
         }
@@ -45,7 +58,7 @@ namespace TouchTypingTrainerBackend.Controllers
         [HttpGet("get-course-with-lessons-and-exercises")]
         public async Task<IActionResult> GetCourseWithIncludes(int courseId)
         {
-            Course course = await _ts.GetCourseByIdAsync(courseId,
+            Course course = await _tutorService.GetCourseByIdAsync(courseId,
                 includeLessonsWithExercises: true);
 
             return Ok(course);
@@ -58,7 +71,7 @@ namespace TouchTypingTrainerBackend.Controllers
         [HttpGet("get-course")]
         public async Task<IActionResult> GetCourse(int courseId)
         {
-            Course course = await _ts.GetCourseByIdAsync(courseId,
+            Course course = await _tutorService.GetCourseByIdAsync(courseId,
                 includeLessonsWithExercises: false);
 
             return Ok(course);
@@ -71,8 +84,8 @@ namespace TouchTypingTrainerBackend.Controllers
         [HttpGet("get-learning-results")]
         public async Task<IActionResult> GetLearningResults(int courseId)
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var results = await _ts.GetUserLearningResultsAsync(userId, courseId);
+            string userId = _userService.GetUserId();
+            var results = await _tutorService.GetUserLearningResultsAsync(userId, courseId);
 
             return Ok(results);
         }
@@ -84,10 +97,47 @@ namespace TouchTypingTrainerBackend.Controllers
         [HttpGet("get-current-exercise")]
         public async Task<IActionResult> GetCurrentUserExercise(int courseId)
         {
-            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var exercise = await _ts.GetCurrentExercise(userId, courseId);
+            string userId = _userService.GetUserId();
+            var exercise = await _tutorService.GetCurrentExercise(userId, courseId);
 
             return Ok(exercise);
+        }
+
+        /// <summary>
+        /// Completes typing exercise.
+        /// </summary>
+        /// <param name="exercise">Exercise.</param>
+        /// <param name="mistakesCount">Count of mistakes.</param>
+        /// <param name="duration">Typing duration.</param>
+        [HttpPost("complete-exercise")]
+        public async Task<IActionResult> CompleteExercise(Exercise exercise,
+            int courseId,
+            int mistakesCount,
+            int duration)
+        {
+            var result = _calcService.CalculatePerformance<LearningResult>(exercise.StudySet,
+                mistakesCount,
+                duration);
+
+            string userId = _userService.GetUserId();
+
+            await _tutorService.AddUserLearningResultAsync(userId, exercise.Id, result);
+            await _tutorService.UpsertUserCourseProgress(userId, courseId);
+
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Registers new user-course.
+        /// </summary>
+        /// <param name="courseId">Course identifier.</param>
+        [HttpPost("register-user-course")]
+        public async Task<IActionResult> RegisterUserCourse(int courseId)
+        {
+            string userId = _userService.GetUserId();
+            await _tutorService.UpsertUserCourseProgress(userId, courseId);
+
+            return Ok();
         }
     }
 }

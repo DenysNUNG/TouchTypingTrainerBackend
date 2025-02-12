@@ -66,5 +66,41 @@ namespace TouchTypingTrainerBackend.Repositories
             }
             return results;
         }
+
+        /// <inheritdoc />
+        public async Task AddUserLearningResultAsync(string userId, int exerciseId, LearningResult result)
+        {
+            var sprocName = "dbo.InsertNewUserResult";
+            var resultType = 0; // exercise
+
+            var parameters = new SqlParameter[]
+            {
+                new SqlParameter("@Accuracy", result.Accuracy),
+                new SqlParameter("@Speed", result.Speed),
+                new SqlParameter("@ResultType", resultType),
+                new SqlParameter("@UserId", userId),
+                new SqlParameter("@ExerciseId", exerciseId)
+            };
+
+            await _sh.ExecuteNonQueryAsync(sprocName, parameters);
+        }
+
+        /// <inheritdoc />
+        public async Task AddUserTestingResultAsync(string userId, int testId, TestingResult result)
+        {
+            var sprocName = "dbo.InsertNewUserResult";
+            var resultType = 1; // testing material
+
+            var parameters = new SqlParameter[]
+            {
+                new SqlParameter("@Accuracy", result.Accuracy),
+                new SqlParameter("@Speed", result.Speed),
+                new SqlParameter("@ResultType", resultType),
+                new SqlParameter("@UserId", userId),
+                new SqlParameter("@TestingMaterialId", testId)
+            };
+
+            await _sh.ExecuteNonQueryAsync(sprocName, parameters);
+        }
     }
 }

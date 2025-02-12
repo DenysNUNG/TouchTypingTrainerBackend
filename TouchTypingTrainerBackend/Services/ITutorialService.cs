@@ -25,7 +25,8 @@ namespace TouchTypingTrainerBackend.Services
         /// </summary>
         /// <param name="userId">A user identifier.</param>
         /// <param name="courseId">A Course identifier.</param>
-        Task<List<LearningResult>> GetUserLearningResultsAsync(string userId, int courseId);
+        Task<List<LearningResult>> GetUserLearningResultsAsync(string userId,
+            int courseId);
 
         /// <summary>
         /// Gets current user-related exercise.
@@ -33,5 +34,22 @@ namespace TouchTypingTrainerBackend.Services
         /// <param name="userId">User identifier.</param>
         /// <param name="courseId">Course idetifier.</param>
         Task<Exercise> GetCurrentExercise(string userId, int courseId);
+
+        /// <summary>
+        /// Adds new user-related learning result.
+        /// </summary>
+        /// <param name="userId">User identifier.</param>
+        /// <param name="exerciseId">Exercise identifier.</param>
+        /// <param name="result">User-related learning result.</param>
+        Task AddUserLearningResultAsync(string userId, int exerciseId,
+            LearningResult result);
+
+        /// <summary>
+        /// Registers new user-course or
+        /// sets next exercise in user-course progress.
+        /// </summary>
+        /// <param name="userId">User identifier.</param>
+        /// <param name="courseId">Course identifier.</param>
+        Task UpsertUserCourseProgress(string userId, int courseId);
     }
 }

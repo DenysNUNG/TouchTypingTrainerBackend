@@ -45,5 +45,19 @@ namespace TouchTypingTrainerBackend.Repositories
 
             return exercise;
         }
+
+        /// <inheritdoc/>
+        public async Task UpsertUserCourseProgress(string userId, int courseId)
+        {
+            var sprocName = "dbo.UpsertUserCourseProgress";
+
+            var parameters = new SqlParameter[]
+            {
+                new SqlParameter("@UserId", userId),
+                new SqlParameter("@CourseId", courseId)
+            };
+
+            await _sh.ExecuteNonQueryAsync(sprocName, parameters);
+        }
     }
 }
