@@ -51,7 +51,7 @@ namespace TouchTypingTrainerBackend.Helpers
         /// </summary>
         /// <param name="disposing">Indicates whether the method is being called
         /// from the Dispose method.</param>
-        protected virtual void Dispose(bool disposing)
+        protected virtual async void Dispose(bool disposing)
         {
             if (!_disposed)
             {
@@ -91,6 +91,24 @@ namespace TouchTypingTrainerBackend.Helpers
             }
 
             return await _cd.ExecuteReaderAsync();
+        }
+
+        /// <inheritdoc />
+        public async Task ExecuteNonQueryAsync(string sprocName,
+            SqlParameter[] parameters)
+        {
+            await _cnn.OpenAsync();
+
+            _cd = _cnn.CreateCommand();
+            _cd.CommandType = CommandType.StoredProcedure;
+            _cd.CommandText = sprocName;
+
+            if (!parameters.IsNullOrEmpty())
+            {
+                _cd.Parameters.AddRange(parameters);
+            }
+
+            await _cd.ExecuteNonQueryAsync();
         }
     }
 }
