@@ -10,7 +10,12 @@ namespace TouchTypingTrainerBackend.Services
         /// <summary>
         /// Gets random testing material set.
         /// </summary>
-        /// <returns></returns>
         Task<TestingMaterial> GetRandomTestingMaterial();
+
+        /// <summary>
+        /// Gets user-related testing results.
+        /// </summary>
+        /// <param name="userId">A user identifier.</param>
+        Task<List<TestingResult>> GetUserTestingResultsAsync(string userId);
     }
 }

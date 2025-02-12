@@ -11,26 +11,39 @@ namespace TouchTypingTrainerBackend.Services
         /// <summary>
         /// Test repository.
         /// </summary>
-        readonly ITestRepository _repo;
+        readonly ITestRepository _testRepo;
+
+        /// <summary>
+        /// User result repository.
+        /// </summary>
+        readonly private IUserResultRepository _resultRepo;
 
         /// <summary>
         /// DI constructor.
         /// </summary>
-        public TestService(ITestRepository testRepository)
+        public TestService(ITestRepository testRepository,
+            IUserResultRepository userResultRepository)
         {
-            _repo = testRepository;
+            _testRepo = testRepository;
+            _resultRepo = userResultRepository;
         }
 
         /// <inheritdoc />
         public async Task<TestingMaterial> GetRandomTestingMaterial()
         {
-            var materials = await _repo.GetTestingMaterialsAsync();
+            var materials = await _testRepo.GetTestingMaterialsAsync();
             var random = new Random();
             var randomIndex = random.Next(materials.Count);
 
             var randomMaterial = materials[randomIndex];
 
             return randomMaterial;
+        }
+
+        /// <inheritdoc />
+        public async Task<List<TestingResult>> GetUserTestingResultsAsync(string userId)
+        {
+            return await _resultRepo.GetUserTestingResultsAsync(userId);
         }
     }
 }

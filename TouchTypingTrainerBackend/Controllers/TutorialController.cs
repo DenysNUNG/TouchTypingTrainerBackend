@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using TouchTypingTrainerBackend.Entities;
 using TouchTypingTrainerBackend.Services;
 
@@ -7,6 +9,7 @@ namespace TouchTypingTrainerBackend.Controllers
     /// <summary>
     /// Tutorial API controller.
     /// </summary>
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TutorialController : ControllerBase
@@ -14,14 +17,14 @@ namespace TouchTypingTrainerBackend.Controllers
         /// <summary>
         /// Tutorial service.
         /// </summary>
-        readonly private ITutorialService _service;
+        readonly private ITutorialService _ts;
 
         /// <summary>
         /// DI constructor.
         /// </summary>
-        public TutorialController(ITutorialService service)
+        public TutorialController(ITutorialService tutorialService)
         {
-            _service = service;
+            _ts = tutorialService;
         }
 
         /// <summary>
@@ -30,7 +33,8 @@ namespace TouchTypingTrainerBackend.Controllers
         [HttpGet("get-courses")]
         public async Task<IActionResult> GetCourses()
         {
-            List<Course> courses = await _service.GetCoursesAsync();
+            List<Course> courses = await _ts.GetCoursesAsync();
+
             return Ok(courses);
         }
 
@@ -41,7 +45,7 @@ namespace TouchTypingTrainerBackend.Controllers
         [HttpGet("get-course-with-lessons-and-exercises")]
         public async Task<IActionResult> GetCourseWithIncludes(int courseId)
         {
-            Course course = await _service.GetCourseByIdAsync(courseId,
+            Course course = await _ts.GetCourseByIdAsync(courseId,
                 includeLessonsWithExercises: true);
 
             return Ok(course);
@@ -54,10 +58,36 @@ namespace TouchTypingTrainerBackend.Controllers
         [HttpGet("get-course")]
         public async Task<IActionResult> GetCourse(int courseId)
         {
-            Course course = await _service.GetCourseByIdAsync(courseId,
+            Course course = await _ts.GetCourseByIdAsync(courseId,
                 includeLessonsWithExercises: false);
 
             return Ok(course);
+        }
+
+        /// <summary>
+        /// Gets user-related learning results.
+        /// </summary>
+        /// <param name="courseId">Course identifier.</param>
+        [HttpGet("get-learning-results")]
+        public async Task<IActionResult> GetLearningResults(int courseId)
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var results = await _ts.GetUserLearningResultsAsync(userId, courseId);
+
+            return Ok(results);
+        }
+
+        /// <summary>
+        /// Gets current user exercise.
+        /// </summary>
+        /// <param name="courseId">Course identifier.</param>
+        [HttpGet("get-current-exercise")]
+        public async Task<IActionResult> GetCurrentUserExercise(int courseId)
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var exercise = await _ts.GetCurrentExercise(userId, courseId);
+
+            return Ok(exercise);
         }
     }
 }

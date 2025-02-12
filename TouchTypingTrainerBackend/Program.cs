@@ -14,7 +14,6 @@ builder.Services.AddTransient<ISprocHelper, SprocHelper>(p =>
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
 builder.Services.AddScoped<ITutorialService, TutorialService>();
 builder.Services.AddScoped<IUserResultRepository, UserResultRepository>();
-builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProgressRepository, ProgressRepository>();
 builder.Services.AddScoped<ITestRepository, TestRepository>();
 builder.Services.AddScoped<ITestService, TestService>();
