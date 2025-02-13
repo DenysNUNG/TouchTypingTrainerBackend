@@ -147,7 +147,7 @@ namespace TouchTypingTrainerBackend.Controllers
         public async Task<IActionResult> GetUserCourses()
         {
             string userId = _userService.GetUserId();
-            var courses = _tutorService.GetUserCourses(userId);
+            var courses = await _tutorService.GetUserCourses(userId);
 
             return Ok(courses);
         }
