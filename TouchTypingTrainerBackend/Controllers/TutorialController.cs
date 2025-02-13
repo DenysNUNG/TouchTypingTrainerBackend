@@ -98,7 +98,7 @@ namespace TouchTypingTrainerBackend.Controllers
         public async Task<IActionResult> GetCurrentUserExercise(int courseId)
         {
             string userId = _userService.GetUserId();
-            var exercise = await _tutorService.GetCurrentExercise(userId, courseId);
+            var exercise = await _tutorService.GetCurrentExerciseAsync(userId, courseId);
 
             return Ok(exercise);
         }
@@ -118,13 +118,13 @@ namespace TouchTypingTrainerBackend.Controllers
             var result = _calcService.CalculatePerformance<LearningResult>(exercise.StudySet,
                 mistakesCount,
                 duration);
-            
+
             result.ExerciseId = exercise.Id;
 
             string userId = _userService.GetUserId();
 
             await _tutorService.AddUserLearningResultAsync(userId, result);
-            await _tutorService.UpsertUserCourseProgress(userId, courseId);
+            await _tutorService.UpsertUserCourseProgressAsync(userId, courseId);
 
             return Ok(result);
         }
@@ -137,7 +137,7 @@ namespace TouchTypingTrainerBackend.Controllers
         public async Task<IActionResult> RegisterUserCourse(int courseId)
         {
             string userId = _userService.GetUserId();
-            await _tutorService.UpsertUserCourseProgress(userId, courseId);
+            await _tutorService.UpsertUserCourseProgressAsync(userId, courseId);
 
             return Ok();
         }
@@ -149,7 +149,7 @@ namespace TouchTypingTrainerBackend.Controllers
         public async Task<IActionResult> GetUserCourses()
         {
             string userId = _userService.GetUserId();
-            var courses = await _tutorService.GetUserCourses(userId);
+            var courses = _tutorService.GetUserCoursesAsync(userId);
 
             return Ok(courses);
         }

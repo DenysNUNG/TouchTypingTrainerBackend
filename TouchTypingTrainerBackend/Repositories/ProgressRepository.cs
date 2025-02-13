@@ -24,7 +24,7 @@ namespace TouchTypingTrainerBackend.Repositories
         }
 
         /// <inheritdoc />
-        public async Task<Exercise> GetCurrentExercise(string userId, int courseId)
+        public async Task<Exercise> GetCurrentExerciseAsync(string userId, int courseId)
         {
             var sprocName = "dbo.SelectCurrentExercise";
 
@@ -48,7 +48,7 @@ namespace TouchTypingTrainerBackend.Repositories
         }
 
         /// <inheritdoc />
-        public async Task UpsertUserCourseProgress(string userId, int courseId)
+        public async Task UpsertUserCourseProgressAsync(string userId, int courseId)
         {
             var sprocName = "dbo.UpsertUserCourseProgress";
 
@@ -62,7 +62,7 @@ namespace TouchTypingTrainerBackend.Repositories
         }
 
         /// <inheritdoc />
-        public async Task<List<Course>> GetUserCourses(string userId)
+        public async Task<List<Course>> GetUserCoursesAsync(string userId)
         {
             var sprocName = "dbo.SelectUserCourses";
 

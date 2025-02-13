@@ -12,19 +12,19 @@ namespace TouchTypingTrainerBackend.Repositories
         /// </summary>
         /// <param name="userId">User identifier.</param>
         /// <param name="courseId">Course idetifier.</param>
-        Task<Exercise> GetCurrentExercise(string userId, int courseId);
+        Task<Exercise> GetCurrentExerciseAsync(string userId, int courseId);
 
         /// <summary>
         /// Registers user-course.
         /// </summary>
         /// <param name="userId">User idetifier.</param>
         /// <param name="courseId">Course idetifier.</param>
-        Task UpsertUserCourseProgress(string userId, int courseId);
+        Task UpsertUserCourseProgressAsync(string userId, int courseId);
 
         /// <summary>
         /// Gets user-related courses.
         /// </summary>
         /// <param name="userId">User identifier.</param>
-        Task<List<Course>> GetUserCourses(string userId);
+        Task<List<Course>> GetUserCoursesAsync(string userId);
     }
 }

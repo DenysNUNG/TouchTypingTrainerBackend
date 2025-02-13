@@ -95,6 +95,14 @@ namespace TouchTupingTrainerBackend.Tests.Services
             }
         };
 
+        readonly private Exercise _expectedExercise = new Exercise()
+        {
+            Id = 1,
+            Title = "Exercise 1, keys F and J",
+            StudySet = "fj jf fj fj jf fj ffjf fjjf jfjj",
+            LessonId = 1
+        };
+
         public TutorialServiceTest()
         {
             _courseRepoMock = new Mock<ICourseRepository>();
@@ -184,7 +192,6 @@ namespace TouchTupingTrainerBackend.Tests.Services
         {
             // arrange
             string userId = "1";
-            int courseId = 1;
 
             var learningResult = new LearningResult
             {
@@ -194,12 +201,62 @@ namespace TouchTupingTrainerBackend.Tests.Services
                 ExerciseId = 1
             };
 
-            _resultRepoMock.Setup(r => r.AddUserLearningResultAsync(userId, learningResult));
-
-
             // act
+            await _tutorialService.AddUserLearningResultAsync(userId, learningResult);
 
             // assert
+            _resultRepoMock.Verify(r => r.AddUserLearningResultAsync(userId, learningResult), Times.Once);
+        }
+
+        [Fact]
+        public async Task GetCurrentExerciseAsync_ShouldReturnAnExercise()
+        {
+            // arrange
+            var userId = "1";
+            var courseId = 1;
+
+            _progressRepoMock.Setup(r => r.GetCurrentExerciseAsync(userId, courseId))
+                .ReturnsAsync(_expectedExercise);
+
+            // act
+            var result = await _tutorialService.GetCurrentExerciseAsync(userId, courseId);
+
+            // assert
+            _progressRepoMock.Verify(r => r.GetCurrentExerciseAsync(userId, courseId), Times.Once);
+
+            result.Should().BeEquivalentTo(_expectedExercise);
+        }
+
+        [Fact]
+        public async Task GetUserCoursesAsync_ShouldReturnACollectionWithCourses()
+        {
+            // arrange
+            var userId = "1";
+
+            _progressRepoMock.Setup(r => r.GetUserCoursesAsync(userId))
+                .ReturnsAsync(_expectedCourses);
+
+            // act
+            var result = await _tutorialService.GetUserCoursesAsync(userId);
+
+            // assert
+            _progressRepoMock.Verify(r => r.GetUserCoursesAsync(userId), Times.Once());
+
+            result.Should().BeEquivalentTo(_expectedCourses);
+        }
+
+        [Fact]
+        public async Task UpsertUserCourseProgressAsync_ShouldUpsertUserCourseProgress()
+        {
+            // arrange
+            var userId = "1";
+            var courseId = 1;
+
+            // act
+            await _tutorialService.UpsertUserCourseProgressAsync(userId, courseId);
+
+            // assert
+            _progressRepoMock.Verify(r => r.UpsertUserCourseProgressAsync(userId, courseId), Times.Once);
         }
     }
 }

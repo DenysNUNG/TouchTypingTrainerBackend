@@ -56,9 +56,9 @@ namespace TouchTypingTrainerBackend.Services
         }
 
         /// <inheritdoc />
-        public async Task<Exercise> GetCurrentExercise(string userId, int courseId)
+        public async Task<Exercise> GetCurrentExerciseAsync(string userId, int courseId)
         {
-            return await _progressRepo.GetCurrentExercise(userId, courseId);
+            return await _progressRepo.GetCurrentExerciseAsync(userId, courseId);
         }
 
         /// <inheritdoc />
@@ -68,15 +68,15 @@ namespace TouchTypingTrainerBackend.Services
         }
 
         /// <inheritdoc />
-        public async Task UpsertUserCourseProgress(string userId, int courseId)
+        public async Task UpsertUserCourseProgressAsync(string userId, int courseId)
         {
-            await _progressRepo.UpsertUserCourseProgress(userId, courseId);
+            await _progressRepo.UpsertUserCourseProgressAsync(userId, courseId);
         }
 
         /// <inheritdoc />
-        public async Task<List<Course>> GetUserCourses(string userId)
+        public async Task<List<Course>> GetUserCoursesAsync(string userId)
         {
-            return await _progressRepo.GetUserCourses(userId);
+            return await _progressRepo.GetUserCoursesAsync(userId);
         }
     }
 }
