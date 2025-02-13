@@ -139,5 +139,17 @@ namespace TouchTypingTrainerBackend.Controllers
 
             return Ok();
         }
+
+        /// <summary>
+        /// Gets user-related courses.
+        /// </summary>
+        [HttpGet("get-user-courses")]
+        public async Task<IActionResult> GetUserCourses()
+        {
+            string userId = _userService.GetUserId();
+            var courses = _tutorService.GetUserCourses(userId);
+
+            return Ok(courses);
+        }
     }
 }

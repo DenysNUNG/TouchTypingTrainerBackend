@@ -20,5 +20,11 @@ namespace TouchTypingTrainerBackend.Repositories
         /// <param name="userId">User idetifier.</param>
         /// <param name="courseId">Course idetifier.</param>
         Task UpsertUserCourseProgress(string userId, int courseId);
+
+        /// <summary>
+        /// Gets user-related courses.
+        /// </summary>
+        /// <param name="userId">User identifier.</param>
+        Task<List<Course>> GetUserCourses(string userId);
     }
 }

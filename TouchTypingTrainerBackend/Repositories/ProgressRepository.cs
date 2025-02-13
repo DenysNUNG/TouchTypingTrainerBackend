@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Options;
 using TouchTypingTrainerBackend.Entities;
 using TouchTypingTrainerBackend.Helpers;
 
@@ -46,7 +47,7 @@ namespace TouchTypingTrainerBackend.Repositories
             return exercise;
         }
 
-        /// <inheritdoc/>
+        /// <inheritdoc />
         public async Task UpsertUserCourseProgress(string userId, int courseId)
         {
             var sprocName = "dbo.UpsertUserCourseProgress";
@@ -58,6 +59,34 @@ namespace TouchTypingTrainerBackend.Repositories
             };
 
             await _sh.ExecuteNonQueryAsync(sprocName, parameters);
+        }
+
+        /// <inheritdoc />
+        public async Task<List<Course>> GetUserCourses(string userId)
+        {
+            var sprocName = "dbo.SelectUserCourses";
+
+            var parameters = new SqlParameter[]
+            {
+                new SqlParameter("@UserId", userId)
+            };
+
+            using var dr = await _sh.ExecuteReaderAsync(sprocName, parameters);
+
+            if (!dr.HasRows)
+            {
+                return default(List<Course>);
+            }
+
+            var courses = new List<Course>();
+
+            while (await dr.ReadAsync())
+            {
+                var course = Course.Map(dr);
+                courses.Add(course);
+            }
+
+            return courses;
         }
     }
 }

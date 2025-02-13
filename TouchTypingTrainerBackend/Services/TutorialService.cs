@@ -74,5 +74,11 @@ namespace TouchTypingTrainerBackend.Services
         {
             await _progressRepo.UpsertUserCourseProgress(userId, courseId);
         }
+
+        /// <inheritdoc />
+        public async Task<List<Course>> GetUserCourses(string userId)
+        {
+            return await _progressRepo.GetUserCourses(userId);
+        }
     }
 }
