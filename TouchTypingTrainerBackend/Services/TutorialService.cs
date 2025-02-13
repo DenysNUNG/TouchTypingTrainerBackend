@@ -62,11 +62,9 @@ namespace TouchTypingTrainerBackend.Services
         }
 
         /// <inheritdoc />
-        public async Task AddUserLearningResultAsync(string userId,
-            int exerciseId,
-            LearningResult result)
+        public async Task AddUserLearningResultAsync(string userId, LearningResult result)
         {
-            await _resultRepo.AddUserLearningResultAsync(userId, exerciseId, result);
+            await _resultRepo.AddUserLearningResultAsync(userId, result);
         }
 
         /// <inheritdoc />

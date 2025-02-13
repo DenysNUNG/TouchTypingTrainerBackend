@@ -118,10 +118,12 @@ namespace TouchTypingTrainerBackend.Controllers
             var result = _calcService.CalculatePerformance<LearningResult>(exercise.StudySet,
                 mistakesCount,
                 duration);
+            
+            result.ExerciseId = exercise.Id;
 
             string userId = _userService.GetUserId();
 
-            await _tutorService.AddUserLearningResultAsync(userId, exercise.Id, result);
+            await _tutorService.AddUserLearningResultAsync(userId, result);
             await _tutorService.UpsertUserCourseProgress(userId, courseId);
 
             return Ok(result);

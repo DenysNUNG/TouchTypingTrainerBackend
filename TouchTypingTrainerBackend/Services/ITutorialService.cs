@@ -39,10 +39,8 @@ namespace TouchTypingTrainerBackend.Services
         /// Adds new user-related learning result.
         /// </summary>
         /// <param name="userId">User identifier.</param>
-        /// <param name="exerciseId">Exercise identifier.</param>
         /// <param name="result">User-related learning result.</param>
-        Task AddUserLearningResultAsync(string userId, int exerciseId,
-            LearningResult result);
+        Task AddUserLearningResultAsync(string userId, LearningResult result);
 
         /// <summary>
         /// Registers new user-course or

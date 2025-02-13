@@ -68,7 +68,7 @@ namespace TouchTypingTrainerBackend.Repositories
         }
 
         /// <inheritdoc />
-        public async Task AddUserLearningResultAsync(string userId, int exerciseId, LearningResult result)
+        public async Task AddUserLearningResultAsync(string userId, LearningResult result)
         {
             var sprocName = "dbo.InsertNewUserResult";
             var resultType = 0; // exercise
@@ -79,7 +79,7 @@ namespace TouchTypingTrainerBackend.Repositories
                 new SqlParameter("@Speed", result.Speed),
                 new SqlParameter("@ResultType", resultType),
                 new SqlParameter("@UserId", userId),
-                new SqlParameter("@ExerciseId", exerciseId)
+                new SqlParameter("@ExerciseId", result.ExerciseId)
             };
 
             await _sh.ExecuteNonQueryAsync(sprocName, parameters);
