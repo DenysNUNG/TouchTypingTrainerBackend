@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TouchTypingTrainerBackend.Entities;
+using TouchTypingTrainerBackend.Models;
 using TouchTypingTrainerBackend.Services;
 
 namespace TouchTypingTrainerBackend.Controllers
@@ -72,19 +73,19 @@ namespace TouchTypingTrainerBackend.Controllers
         /// <param name="duration">Typing duration.</param>
         [AllowAnonymous]
         [HttpPost("complete")]
-        public async Task<IActionResult> CompleteTest(TestingMaterial material,
-            int mistakesCount,
-            int duration)
+        public async Task<IActionResult> CompleteTest([FromBody]TestCompleteRequest request)
         {
-            var result = _calcService.CalculatePerformance<TestingResult>(material.Text,
-                mistakesCount,
-                duration);
+            var result = _calcService.CalculatePerformance<TestingResult>(
+                request.TestingMaterial.Text,
+                request.MistakesCount,
+                request.Duration);
 
             string userId = _userService.GetUserId();
 
             if (userId is not null)
             {
-                await _testService.AddUserTestingResultAsync(userId, material.Id, result);
+                await _testService.AddUserTestingResultAsync(userId,
+                    request.TestingMaterial.Id, result);
             }
 
             return Ok(result);

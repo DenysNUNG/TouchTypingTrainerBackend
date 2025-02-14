@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TouchTypingTrainerBackend.Entities;
+using TouchTypingTrainerBackend.Models;
 using TouchTypingTrainerBackend.Services;
 
 namespace TouchTypingTrainerBackend.Controllers
@@ -110,21 +111,19 @@ namespace TouchTypingTrainerBackend.Controllers
         /// <param name="mistakesCount">Count of mistakes.</param>
         /// <param name="duration">Typing duration.</param>
         [HttpPost("complete-exercise")]
-        public async Task<IActionResult> CompleteExercise(Exercise exercise,
-            int courseId,
-            int mistakesCount,
-            int duration)
+        public async Task<IActionResult> CompleteExercise([FromBody]ExerciseCompleteRequest request)
         {
-            var result = _calcService.CalculatePerformance<LearningResult>(exercise.StudySet,
-                mistakesCount,
-                duration);
+            var result = _calcService.CalculatePerformance<LearningResult>(
+                request.Exercise.StudySet,
+                request.MistakesCount,
+                request.Duration);
 
-            result.ExerciseId = exercise.Id;
+            result.ExerciseId = request.Exercise.Id;
 
             string userId = _userService.GetUserId();
 
             await _tutorService.AddUserLearningResultAsync(userId, result);
-            await _tutorService.UpsertUserCourseProgressAsync(userId, courseId);
+            await _tutorService.UpsertUserCourseProgressAsync(userId, request.CourseId);
 
             return Ok(result);
         }
