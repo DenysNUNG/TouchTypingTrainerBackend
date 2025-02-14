@@ -47,7 +47,7 @@ namespace TouchTypingTrainerBackend.Controllers
         [HttpGet("get-random-test-set")]
         public async Task<IActionResult> GetRandomTestingMaterial()
         {
-            var randomTestSet = await _testService.GetRandomTestingMaterial();
+            var randomTestSet = await _testService.GetRandomTestingMaterialAsync();
 
             return Ok(randomTestSet);
         }
