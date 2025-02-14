@@ -46,23 +46,21 @@ namespace TouchTypingTrainerBackend.Controllers
         /// </summary>
         [AllowAnonymous]
         [HttpGet("get-random-test-set")]
-        public async Task<IActionResult> GetRandomTestingMaterial()
+        public async Task<TestingMaterial> GetRandomTestingMaterial()
         {
-            var randomTestSet = await _testService.GetRandomTestingMaterialAsync();
-
-            return Ok(randomTestSet);
+            return await _testService.GetRandomTestingMaterialAsync();
         }
 
         /// <summary>
         /// Gets user-related testing results.
         /// </summary>
         [HttpGet("get-testing-results")]
-        public async Task<IActionResult> GetTestingResults()
+        public async Task<List<TestingResult>> GetTestingResults()
         {
             string userId = _userService.GetUserId();
             var results = await _testService.GetUserTestingResultsAsync(userId);
 
-            return Ok(results);
+            return results;
         }
 
         /// <summary>
@@ -73,7 +71,7 @@ namespace TouchTypingTrainerBackend.Controllers
         /// <param name="duration">Typing duration.</param>
         [AllowAnonymous]
         [HttpPost("complete")]
-        public async Task<IActionResult> CompleteTest([FromBody]TestCompleteRequest request)
+        public async Task<IUserResult> CompleteTest([FromBody]TestCompleteRequest request)
         {
             var result = _calcService.CalculatePerformance<TestingResult>(
                 request.TestingMaterial.Text,
@@ -88,7 +86,7 @@ namespace TouchTypingTrainerBackend.Controllers
                     request.TestingMaterial.Id, result);
             }
 
-            return Ok(result);
+            return result;
         }
     }
 }

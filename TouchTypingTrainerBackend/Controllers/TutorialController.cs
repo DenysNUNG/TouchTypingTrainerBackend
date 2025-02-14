@@ -45,11 +45,9 @@ namespace TouchTypingTrainerBackend.Controllers
         /// Gets all courses.
         /// </summary>
         [HttpGet("get-courses")]
-        public async Task<IActionResult> GetCourses()
+        public async Task<List<Course>> GetCourses()
         {
-            List<Course> courses = await _tutorService.GetCoursesAsync();
-
-            return Ok(courses);
+            return await _tutorService.GetCoursesAsync();
         }
 
         /// <summary>
@@ -57,12 +55,12 @@ namespace TouchTypingTrainerBackend.Controllers
         /// </summary>
         /// <param name="courseId">A course identifier.</param>
         [HttpGet("get-course-with-lessons-and-exercises")]
-        public async Task<IActionResult> GetCourseWithIncludes(int courseId)
+        public async Task<Course> GetCourseWithIncludes(int courseId)
         {
             Course course = await _tutorService.GetCourseByIdAsync(courseId,
                 includeLessonsWithExercises: true);
 
-            return Ok(course);
+            return course;
         }
 
         /// <summary>
@@ -70,12 +68,12 @@ namespace TouchTypingTrainerBackend.Controllers
         /// </summary>
         /// <param name="courseId">A course identifier.</param>
         [HttpGet("get-course")]
-        public async Task<IActionResult> GetCourse(int courseId)
+        public async Task<Course> GetCourse(int courseId)
         {
             Course course = await _tutorService.GetCourseByIdAsync(courseId,
                 includeLessonsWithExercises: false);
 
-            return Ok(course);
+            return course;
         }
 
         /// <summary>
@@ -83,12 +81,12 @@ namespace TouchTypingTrainerBackend.Controllers
         /// </summary>
         /// <param name="courseId">Course identifier.</param>
         [HttpGet("get-learning-results")]
-        public async Task<IActionResult> GetLearningResults(int courseId)
+        public async Task<List<LearningResult>> GetLearningResults(int courseId)
         {
             string userId = _userService.GetUserId();
             var results = await _tutorService.GetUserLearningResultsAsync(userId, courseId);
 
-            return Ok(results);
+            return results;
         }
 
         /// <summary>
@@ -96,12 +94,12 @@ namespace TouchTypingTrainerBackend.Controllers
         /// </summary>
         /// <param name="courseId">Course identifier.</param>
         [HttpGet("get-current-exercise")]
-        public async Task<IActionResult> GetCurrentUserExercise(int courseId)
+        public async Task<Exercise> GetCurrentUserExercise(int courseId)
         {
             string userId = _userService.GetUserId();
             var exercise = await _tutorService.GetCurrentExerciseAsync(userId, courseId);
 
-            return Ok(exercise);
+            return exercise;
         }
 
         /// <summary>
@@ -111,7 +109,7 @@ namespace TouchTypingTrainerBackend.Controllers
         /// <param name="mistakesCount">Count of mistakes.</param>
         /// <param name="duration">Typing duration.</param>
         [HttpPost("complete-exercise")]
-        public async Task<IActionResult> CompleteExercise([FromBody]ExerciseCompleteRequest request)
+        public async Task<IUserResult> CompleteExercise([FromBody]ExerciseCompleteRequest request)
         {
             var result = _calcService.CalculatePerformance<LearningResult>(
                 request.Exercise.StudySet,
@@ -125,7 +123,7 @@ namespace TouchTypingTrainerBackend.Controllers
             await _tutorService.AddUserLearningResultAsync(userId, result);
             await _tutorService.UpsertUserCourseProgressAsync(userId, request.CourseId);
 
-            return Ok(result);
+            return result;
         }
 
         /// <summary>
@@ -145,12 +143,12 @@ namespace TouchTypingTrainerBackend.Controllers
         /// Gets user-related courses.
         /// </summary>
         [HttpGet("get-user-courses")]
-        public async Task<IActionResult> GetUserCourses()
+        public async Task<List<Course>> GetUserCourses()
         {
             string userId = _userService.GetUserId();
-            var courses = _tutorService.GetUserCoursesAsync(userId);
+            var courses = await _tutorService.GetUserCoursesAsync(userId);
 
-            return Ok(courses);
+            return courses;
         }
     }
 }
