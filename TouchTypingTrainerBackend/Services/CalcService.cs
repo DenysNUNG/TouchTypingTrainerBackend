@@ -15,20 +15,19 @@ namespace TouchTypingTrainerBackend.Services
             int duration)
             where T : IUserResult, new()
         {
-            int setLength = resourse.Length;
-
             T result = new T();
 
             try
             {
                 const int MINUTE_SECONDS = 60;
                 const float MAX_PERCENT_VALUE = 100f;
+                int resourseLength = resourse.Length;
 
-                result.Speed = setLength * MINUTE_SECONDS / duration;
+                result.Speed = resourseLength * MINUTE_SECONDS / duration;
 
-                if (!(mistakesCount > setLength))
+                if (!(mistakesCount > resourseLength))
                 {
-                    float accuracyResult = (setLength - mistakesCount) * MAX_PERCENT_VALUE / setLength;
+                    float accuracyResult = (resourseLength - mistakesCount) * MAX_PERCENT_VALUE / resourseLength;
                     result.Accuracy = MathF.Round(accuracyResult, 2);
                 }
                 else
