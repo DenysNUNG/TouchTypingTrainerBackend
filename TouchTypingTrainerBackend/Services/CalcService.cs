@@ -1,4 +1,6 @@
-﻿using TouchTypingTrainerBackend.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
+using TouchTypingTrainerBackend.Models;
 
 namespace TouchTypingTrainerBackend.Services
 {
@@ -10,16 +12,36 @@ namespace TouchTypingTrainerBackend.Services
         /// <inheritdoc/>
         public T CalculatePerformance<T>(string resourse,
             int mistakesCount,
-            int duration) 
+            int duration)
             where T : IUserResult, new()
         {
             int setLength = resourse.Length;
 
-            return new T
+            T result = new T();
+
+            try
             {
-                Accuracy = (setLength - mistakesCount) * 100 / setLength,
-                Speed = setLength * 60 / duration
-            };
+                const int MINUTE_SECONDS = 60;
+                const float MAX_PERCENT_VALUE = 100f;
+
+                result.Speed = setLength * MINUTE_SECONDS / duration;
+
+                if (!(mistakesCount > setLength))
+                {
+                    float accuracyResult = (setLength - mistakesCount) * MAX_PERCENT_VALUE / setLength;
+                    result.Accuracy = MathF.Round(accuracyResult, 2);
+                }
+                else
+                {
+                    result.Accuracy = 0f;
+                }
+            }
+            catch (DivideByZeroException)
+            {
+                result.Speed = 0;
+                result.Accuracy = 0f;
+            }
+            return result;
         }
     }
 }
