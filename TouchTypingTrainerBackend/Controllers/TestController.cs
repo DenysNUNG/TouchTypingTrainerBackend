@@ -67,9 +67,7 @@ namespace TouchTypingTrainerBackend.Controllers
         /// <summary>
         /// Completes typing test.
         /// </summary>
-        /// <param name="material">Testing material.</param>
-        /// <param name="mistakesCount">Count of mistakes.</param>
-        /// <param name="duration">Typing duration.</param>
+        /// <param name="request">Test complete request.</param>
         [AllowAnonymous]
         [HttpPost("complete")]
         public async Task<IUserResult> CompleteTest([FromBody] TestCompleteRequest request)
