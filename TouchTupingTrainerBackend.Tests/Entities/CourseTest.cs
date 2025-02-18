@@ -15,6 +15,7 @@ namespace TouchTupingTrainerBackend.Tests.Entities
             var expectedId = 1;
             var expectedTitle = "qwerty";
             var expectedDescription = "layout qwerty (english)";
+            var expectedLayoutId = 1;
 
             rm.Setup(r => r.GetOrdinal("Course_UID"))
                 .Returns(0);
@@ -31,6 +32,11 @@ namespace TouchTupingTrainerBackend.Tests.Entities
             rm.Setup(r => r.GetString(2))
                 .Returns(expectedDescription);
 
+            rm.Setup(r => r.GetOrdinal("LayoutFID"))
+                .Returns(3);
+            rm.Setup(r => r.GetInt32(3))
+                .Returns(expectedLayoutId);
+
             // act
             var course = Course.Map(rm.Object);
 
@@ -38,6 +44,7 @@ namespace TouchTupingTrainerBackend.Tests.Entities
             Assert.Equal(expectedId, course.Id);
             Assert.Equal(expectedTitle, course.Title);
             Assert.Equal(expectedDescription, course.Description);
+            Assert.Equal(expectedLayoutId, course.LayoutId);
         }
     }
 }

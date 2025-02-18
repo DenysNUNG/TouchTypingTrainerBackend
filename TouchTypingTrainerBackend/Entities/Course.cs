@@ -23,6 +23,11 @@ namespace TouchTypingTrainerBackend.Entities
         public string Description { get; set; }
 
         /// <summary>
+        /// Related layout identifier.
+        /// </summary>
+        public int LayoutId { get; set; }
+
+        /// <summary>
         /// Course lessons.
         /// </summary>
         public List<Lesson> Lessons { get; set; }
@@ -38,7 +43,8 @@ namespace TouchTypingTrainerBackend.Entities
             {
                 Id = dr.GetInt32(dr.GetOrdinal("Course_UID")),
                 Title = dr.GetString(dr.GetOrdinal("Title")),
-                Description = dr.GetString(dr.GetOrdinal("Description"))
+                Description = dr.GetString(dr.GetOrdinal("Description")),
+                LayoutId = dr.GetInt32(dr.GetOrdinal("LayoutFID"))
             };
         }
     }
