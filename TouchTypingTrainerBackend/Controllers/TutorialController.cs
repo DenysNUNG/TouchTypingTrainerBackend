@@ -105,9 +105,7 @@ namespace TouchTypingTrainerBackend.Controllers
         /// <summary>
         /// Completes typing exercise.
         /// </summary>
-        /// <param name="exercise">Exercise.</param>
-        /// <param name="mistakesCount">Count of mistakes.</param>
-        /// <param name="duration">Typing duration.</param>
+        /// <param name="request">Exercise complete request.</param>
         [HttpPost("complete-exercise")]
         public async Task<IUserResult> CompleteExercise([FromBody] ExerciseCompleteRequest request)
         {
@@ -151,12 +149,19 @@ namespace TouchTypingTrainerBackend.Controllers
             return courses;
         }
 
+        /// <summary>
+        /// Gets related layout keys for course.
+        /// </summary>
+        /// <param name="courseId">Course identifier</param>
         [HttpGet("get-course-layout-keys")]
         public async Task<List<LayoutKey>> GetCourseLayoutKeys(int courseId)
         {
             return await _tutorService.GetCourseLayoutKeysAsync(courseId);
         }
 
+        /// <summary>
+        /// Gets all layouts.
+        /// </summary>
         [HttpGet("get-layouts")]
         public async Task<List<Layout>> GetAllLayouts()
         {

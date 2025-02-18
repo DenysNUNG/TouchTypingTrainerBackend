@@ -4,15 +4,25 @@ using TouchTypingTrainerBackend.Helpers;
 
 namespace TouchTypingTrainerBackend.Repositories
 {
+    /// <summary>
+    /// Layout entity repository.
+    /// </summary>
     public class LayoutRepository : ILayoutRepository
     {
+        /// <summary>
+        /// Stored procedure helper.
+        /// </summary>
         readonly private ISprocHelper _sh;
 
+        /// <summary>
+        /// DI constructor.
+        /// </summary>
         public LayoutRepository(ISprocHelper sprocHelper)
         {
             _sh = sprocHelper;
         }
 
+        /// <inheritdoc />
         public async Task<List<LayoutKey>> GetCourseLayoutKeysAsync(int courseId)
         {
             var sprocName = "dbo.SelectCourseLayout";
@@ -40,6 +50,7 @@ namespace TouchTypingTrainerBackend.Repositories
             return courseLayouts;
         }
 
+        /// <inheritdoc />
         public async Task<List<Layout>> GetAllLayoutsAsync()
         {
             var sprocName = "dbo.SelectAllLayouts";

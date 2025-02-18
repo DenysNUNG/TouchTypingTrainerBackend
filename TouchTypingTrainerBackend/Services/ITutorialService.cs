@@ -56,8 +56,15 @@ namespace TouchTypingTrainerBackend.Services
         /// <param name="userId">User identifier.</param>
         Task<List<Course>> GetUserCoursesAsync(string userId);
 
+        /// <summary>
+        /// Gets layouts keys related to course.
+        /// </summary>
+        /// <param name="courseId">Course identifier.</param>
         Task<List<LayoutKey>> GetCourseLayoutKeysAsync(int courseId);
 
+        /// <summary>
+        /// Gets all layouts.
+        /// </summary>
         Task<List<Layout>> GetAllLayoutsAsync();
     }
 }

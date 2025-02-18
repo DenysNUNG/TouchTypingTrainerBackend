@@ -83,11 +83,13 @@ namespace TouchTypingTrainerBackend.Services
             return await _progressRepo.GetUserCoursesAsync(userId);
         }
 
+        /// <inheritdoc />
         public async Task<List<LayoutKey>> GetCourseLayoutKeysAsync(int courseId)
         {
             return await _layoutRepo.GetCourseLayoutKeysAsync(courseId);
         }
 
+        /// <inheritdoc />
         public async Task<List<Layout>> GetAllLayoutsAsync()
         {
             return await _layoutRepo.GetAllLayoutsAsync();

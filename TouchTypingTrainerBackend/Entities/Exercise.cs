@@ -1,6 +1,4 @@
-﻿using System.Collections.Specialized;
-using System.Data.Common;
-using System.Runtime.CompilerServices;
+﻿using System.Data.Common;
 
 namespace TouchTypingTrainerBackend.Entities
 {
