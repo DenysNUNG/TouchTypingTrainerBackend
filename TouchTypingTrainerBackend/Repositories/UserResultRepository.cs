@@ -72,12 +72,14 @@ namespace TouchTypingTrainerBackend.Repositories
         {
             var sprocName = "dbo.InsertNewUserResult";
             var resultType = 0; // exercise
+            result.CreatedAt = DateOnly.FromDateTime(DateTime.Now);
 
             var parameters = new SqlParameter[]
             {
                 new SqlParameter("@Accuracy", result.Accuracy),
                 new SqlParameter("@Speed", result.Speed),
                 new SqlParameter("@ResultType", resultType),
+                new SqlParameter("@CreatedAt", result.CreatedAt),
                 new SqlParameter("@UserId", userId),
                 new SqlParameter("@ExerciseId", result.ExerciseId)
             };
@@ -90,12 +92,14 @@ namespace TouchTypingTrainerBackend.Repositories
         {
             var sprocName = "dbo.InsertNewUserResult";
             var resultType = 1; // testing material
+            result.CreatedAt = DateOnly.FromDateTime(DateTime.Now);
 
             var parameters = new SqlParameter[]
             {
                 new SqlParameter("@Accuracy", result.Accuracy),
                 new SqlParameter("@Speed", result.Speed),
                 new SqlParameter("@ResultType", resultType),
+                new SqlParameter("@CreatedAt", result.CreatedAt),
                 new SqlParameter("@UserId", userId),
                 new SqlParameter("@TestingMaterialId", testId)
             };

@@ -34,6 +34,11 @@ namespace TouchTypingTrainerBackend.Entities
         public Exercise Exercise { get; set; }
 
         /// <summary>
+        /// Date the user took an exercise.
+        /// </summary>
+        public DateOnly CreatedAt { get; set; }
+
+        /// <summary>
         /// Maps learning result.
         /// </summary>
         /// <param name="dr">A reader.</param>
@@ -44,7 +49,8 @@ namespace TouchTypingTrainerBackend.Entities
                 Id = dr.GetInt32(dr.GetOrdinal("UserResult_UID")),
                 Accuracy = dr.GetFloat(dr.GetOrdinal("Accuracy")),
                 Speed = dr.GetInt32(dr.GetOrdinal("Speed")),
-                ExerciseId = dr.GetInt32(dr.GetOrdinal("ExerciseFID"))
+                ExerciseId = dr.GetInt32(dr.GetOrdinal("ExerciseFID")),
+                CreatedAt = dr.GetFieldValue<DateOnly>(dr.GetOrdinal("CreatedAt"))
             };
         }
     }
