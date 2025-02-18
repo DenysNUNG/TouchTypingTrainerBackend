@@ -66,14 +66,16 @@ namespace TouchTupingTrainerBackend.Tests.Services
         public async Task GetRandomTestingMaterialAsync_ShouldReturnARandomTestingMaterialSet()
         {
             // arrange
-            _testRepoMock.Setup(r => r.GetTestingMaterialsAsync())
+            var layoutId = 1;
+
+            _testRepoMock.Setup(r => r.GetTestingMaterialsAsync(layoutId))
                 .ReturnsAsync(_expectedTests);
 
             // act
-            var result = await _testService.GetRandomTestingMaterialAsync();
+            var result = await _testService.GetRandomTestingMaterialAsync(layoutId);
 
             // assert
-            _testRepoMock.Verify(r => r.GetTestingMaterialsAsync(), Times.Once);
+            _testRepoMock.Verify(r => r.GetTestingMaterialsAsync(layoutId), Times.Once);
 
             Assert.Contains(result, _expectedTests);
         }

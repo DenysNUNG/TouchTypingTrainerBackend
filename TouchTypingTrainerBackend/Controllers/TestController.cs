@@ -44,11 +44,12 @@ namespace TouchTypingTrainerBackend.Controllers
         /// <summary>
         /// Gets random testing material set.
         /// </summary>
+        /// <param name="layoutId">Related layout identifier.</param>
         [AllowAnonymous]
         [HttpGet("get-random-test-set")]
-        public async Task<TestingMaterial> GetRandomTestingMaterial()
+        public async Task<TestingMaterial> GetRandomTestingMaterial(int layoutId)
         {
-            return await _testService.GetRandomTestingMaterialAsync();
+            return await _testService.GetRandomTestingMaterialAsync(layoutId);
         }
 
         /// <summary>
@@ -71,7 +72,7 @@ namespace TouchTypingTrainerBackend.Controllers
         /// <param name="duration">Typing duration.</param>
         [AllowAnonymous]
         [HttpPost("complete")]
-        public async Task<IUserResult> CompleteTest([FromBody]TestCompleteRequest request)
+        public async Task<IUserResult> CompleteTest([FromBody] TestCompleteRequest request)
         {
             var result = _calcService.CalculatePerformance<TestingResult>(
                 request.TestingMaterial.Text,

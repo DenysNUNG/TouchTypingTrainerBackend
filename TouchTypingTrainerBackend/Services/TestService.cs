@@ -29,9 +29,9 @@ namespace TouchTypingTrainerBackend.Services
         }
 
         /// <inheritdoc />
-        public async Task<TestingMaterial> GetRandomTestingMaterialAsync()
+        public async Task<TestingMaterial> GetRandomTestingMaterialAsync(int layoutId)
         {
-            var materials = await _testRepo.GetTestingMaterialsAsync();
+            var materials = await _testRepo.GetTestingMaterialsAsync(layoutId);
             var random = new Random();
             var randomIndex = random.Next(materials.Count);
 

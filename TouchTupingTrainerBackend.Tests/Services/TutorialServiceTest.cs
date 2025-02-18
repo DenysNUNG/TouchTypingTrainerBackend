@@ -13,6 +13,7 @@ namespace TouchTupingTrainerBackend.Tests.Services
         private Mock<ICourseRepository> _courseRepoMock;
         private Mock<IUserResultRepository> _resultRepoMock;
         private Mock<IProgressRepository> _progressRepoMock;
+        private Mock<ILayoutRepository> _layoutRepoMock;
 
         readonly private List<Course> _expectedCourses = new List<Course>()
         {
@@ -108,10 +109,12 @@ namespace TouchTupingTrainerBackend.Tests.Services
             _courseRepoMock = new Mock<ICourseRepository>();
             _resultRepoMock = new Mock<IUserResultRepository>();
             _progressRepoMock = new Mock<IProgressRepository>();
+            _layoutRepoMock = new Mock<ILayoutRepository>();
 
             _tutorialService = new TutorialService(_courseRepoMock.Object,
                 _resultRepoMock.Object,
-                _progressRepoMock.Object);
+                _progressRepoMock.Object,
+                _layoutRepoMock.Object);
         }
 
         [Fact]

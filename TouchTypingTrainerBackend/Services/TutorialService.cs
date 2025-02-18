@@ -23,16 +23,20 @@ namespace TouchTypingTrainerBackend.Services
         /// </summary>
         readonly private IProgressRepository _progressRepo;
 
+        readonly private ILayoutRepository _layoutRepo;
+
         /// <summary>
         /// DI constructor.
         /// </summary>
         public TutorialService(ICourseRepository courseRepository,
             IUserResultRepository userResultRepository,
-            IProgressRepository progressRepository)
+            IProgressRepository progressRepository,
+            ILayoutRepository layoutRepo)
         {
             _courseRepo = courseRepository;
             _resultRepo = userResultRepository;
             _progressRepo = progressRepository;
+            _layoutRepo = layoutRepo;
         }
 
         /// <inheritdoc />
@@ -77,6 +81,16 @@ namespace TouchTypingTrainerBackend.Services
         public async Task<List<Course>> GetUserCoursesAsync(string userId)
         {
             return await _progressRepo.GetUserCoursesAsync(userId);
+        }
+
+        public async Task<List<LayoutKey>> GetCourseLayoutKeysAsync(int courseId)
+        {
+            return await _layoutRepo.GetCourseLayoutKeysAsync(courseId);
+        }
+
+        public async Task<List<Layout>> GetAllLayoutsAsync()
+        {
+            return await _layoutRepo.GetAllLayoutsAsync();
         }
     }
 }

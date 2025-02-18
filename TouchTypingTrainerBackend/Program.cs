@@ -19,6 +19,7 @@ builder.Services.AddScoped<ITestRepository, TestRepository>();
 builder.Services.AddScoped<ITestService, TestService>();
 builder.Services.AddTransient<ICalcService, CalcService>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddScoped<ILayoutRepository, LayoutRepository>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

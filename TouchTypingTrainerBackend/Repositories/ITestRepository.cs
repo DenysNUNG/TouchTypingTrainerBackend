@@ -10,6 +10,7 @@ namespace TouchTypingTrainerBackend.Repositories
         /// <summary>
         /// Gets all testing materials.
         /// </summary>
-        Task<List<TestingMaterial>> GetTestingMaterialsAsync();
+        /// <param name="layout">Related layout identifier.</param>
+        Task<List<TestingMaterial>> GetTestingMaterialsAsync(int layout);
     }
 }

@@ -10,7 +10,8 @@ namespace TouchTypingTrainerBackend.Services
         /// <summary>
         /// Gets random testing material set.
         /// </summary>
-        Task<TestingMaterial> GetRandomTestingMaterialAsync();
+        /// <param name="layoutId">Related layout identifier.</param>
+        Task<TestingMaterial> GetRandomTestingMaterialAsync(int layoutId);
 
         /// <summary>
         /// Gets user-related testing results.

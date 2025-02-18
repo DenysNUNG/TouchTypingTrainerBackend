@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
 using Moq;
-using System.Runtime.CompilerServices;
 using TouchTypingTrainerBackend.Controllers;
 using TouchTypingTrainerBackend.Entities;
 using TouchTypingTrainerBackend.Models;
@@ -79,16 +78,18 @@ namespace TouchTupingTrainerBackend.Tests.Controllers
         public async Task GetRandomTestingMaterial_ShouldReturnARandomTestingMaterial()
         {
             // arrange
-            _testService.Setup(s => s.GetRandomTestingMaterialAsync())
+            var layoutId = 1;
+
+            _testService.Setup(s => s.GetRandomTestingMaterialAsync(layoutId))
                 .ReturnsAsync(_expectedTests.First);
 
             // act
-            var result = await _controller.GetRandomTestingMaterial();
+            var result = await _controller.GetRandomTestingMaterial(layoutId);
 
             // assert
             Assert.Contains(result, _expectedTests);
 
-            _testService.Verify(s => s.GetRandomTestingMaterialAsync(), Times.Once);
+            _testService.Verify(s => s.GetRandomTestingMaterialAsync(layoutId), Times.Once);
         }
 
         [Fact]

@@ -23,10 +23,13 @@ namespace TouchTypingTrainerBackend.Repositories
         }
 
         /// <inheritdoc />
-        public async Task<List<TestingMaterial>> GetTestingMaterialsAsync()
+        public async Task<List<TestingMaterial>> GetTestingMaterialsAsync(int layoutId)
         {
             var sprocName = "dbo.SelectAllTestingMaterials";
-            var parameters = Array.Empty<SqlParameter>();
+            var parameters = new SqlParameter[]
+            {
+                new SqlParameter("LayoutId", layoutId)
+            };
 
             using var dr = await _sh.ExecuteReaderAsync(sprocName, parameters);
 
