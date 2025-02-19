@@ -21,6 +21,14 @@ builder.Services.AddTransient<ICalcService, CalcService>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddScoped<ILayoutRepository, LayoutRepository>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowOrigin",
+        builder => builder.WithOrigins("http://localhost:3000")
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -57,5 +65,7 @@ app.UseHttpsRedirection();
 app.MapIdentityApi<IdentityUser>();
 
 app.MapControllers();
+
+app.UseCors("AllowOrigin");
 
 app.Run();
