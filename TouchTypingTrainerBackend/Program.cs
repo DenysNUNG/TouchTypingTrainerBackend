@@ -23,7 +23,7 @@ builder.Services.AddScoped<ILayoutRepository, LayoutRepository>();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowOrigin",
+    options.AddPolicy("AllowAll",
         builder => builder.WithOrigins("http://localhost:3000")
                           .AllowAnyMethod()
                           .AllowAnyHeader());
@@ -53,6 +53,8 @@ builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
+app.UseCors("AllowAll");
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -66,6 +68,8 @@ app.MapIdentityApi<IdentityUser>();
 
 app.MapControllers();
 
-app.UseCors("AllowAll");
+app.UseAuthentication();
+
+app.UseAuthorization();
 
 app.Run();
