@@ -66,6 +66,6 @@ app.MapIdentityApi<IdentityUser>();
 
 app.MapControllers();
 
-app.UseCors("AllowOrigin");
+app.UseCors("AllowAll");
 
 app.Run();
