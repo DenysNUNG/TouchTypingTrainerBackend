@@ -53,5 +53,16 @@ namespace TouchTypingTrainerBackend.Services
         {
             await _resultRepo.AddUserTestingResultAsync(userId, testId, result);
         }
+
+        public async Task<TestingResult> GetHugestTestingResult(string userId)
+        {
+            var results = await _resultRepo.GetUserTestingResultsAsync(userId);
+            
+            var highes = results
+                .OrderByDescending(r => r.Speed)
+                .FirstOrDefault();
+            
+            return highes;
+        }
     }
 }

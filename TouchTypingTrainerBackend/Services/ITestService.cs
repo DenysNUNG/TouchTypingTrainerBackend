@@ -26,5 +26,7 @@ namespace TouchTypingTrainerBackend.Services
         /// <param name="testId">Testing material identifier.</param>
         /// <param name="result">User-related testing result.</param>
         Task AddUserTestingResultAsync(string userId, int testId, TestingResult result);
+
+        Task<TestingResult> GetHugestTestingResult(string userId);
     }
 }
