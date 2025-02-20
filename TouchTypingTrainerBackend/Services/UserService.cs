@@ -28,5 +28,13 @@ namespace TouchTypingTrainerBackend.Services
                 ?.User
                 .FindFirstValue(ClaimTypes.NameIdentifier);
         }
+
+        public string GetUserEmail()
+        {
+            return _httpContextAccessor
+                .HttpContext
+                .User
+                .FindFirstValue(ClaimTypes.Email);
+        }
     }
 }

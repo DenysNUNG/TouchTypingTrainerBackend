@@ -9,5 +9,7 @@
         /// Gets current user identifier.
         /// </summary>
         string? GetUserId();
+
+        string GetUserEmail();
     }
 }
