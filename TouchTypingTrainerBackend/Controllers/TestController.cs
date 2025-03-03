@@ -88,11 +88,11 @@ namespace TouchTypingTrainerBackend.Controllers
             return result;
         }
 
-        [HttpGet("get-hugest-result")]
-        public async Task<TestingResult> GetHugestTestingResult()
+        [HttpGet("get-greatest-result")]
+        public async Task<TestingResult> GetGreatestTestingResult()
         {
             var userId = _userService.GetUserId();
-            return await _testService.GetHugestTestingResult(userId);
+            return await _testService.GetGreatestTestingResult(userId);
         }
     }
 }

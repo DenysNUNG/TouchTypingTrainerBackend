@@ -54,7 +54,7 @@ namespace TouchTypingTrainerBackend.Services
             await _resultRepo.AddUserTestingResultAsync(userId, testId, result);
         }
 
-        public async Task<TestingResult> GetHugestTestingResult(string userId)
+        public async Task<TestingResult> GetGreatestTestingResult(string userId)
         {
             var results = await _resultRepo.GetUserTestingResultsAsync(userId);
             

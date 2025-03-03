@@ -18,11 +18,6 @@ namespace TouchTypingTrainerBackend.Entities
         public string Text { get; set; }
 
         /// <summary>
-        /// Related testing material layout.
-        /// </summary>
-        public int LayoutId { get; set; }
-
-        /// <summary>
         /// Maps testing material.
         /// </summary>
         /// <param name="dr">A reader.</param>
@@ -32,8 +27,7 @@ namespace TouchTypingTrainerBackend.Entities
             return new TestingMaterial
             {
                 Id = dr.GetInt32(dr.GetOrdinal("TestingMaterial_UID")),
-                Text = dr.GetString(dr.GetOrdinal("Text")),
-                LayoutId = dr.GetInt32(dr.GetOrdinal("LayoutFID"))
+                Text = dr.GetString(dr.GetOrdinal("Text"))
             };
         }
     }
