@@ -60,9 +60,20 @@ namespace TouchTypingTrainerBackend.Services
         }
 
         /// <inheritdoc />
-        public async Task<Exercise> GetCurrentExerciseAsync(string userId, int courseId)
+        public async Task<Exercise> GetCurrentExerciseAsync(string userId, int courseId, int? exerciseId)
         {
-            return await _progressRepo.GetCurrentExerciseAsync(userId, courseId);
+            var result = new Exercise();
+
+            if (exerciseId is not null)
+            {
+                result = await _progressRepo.ChooseExerciseAsync(userId, courseId, exerciseId.Value);
+            }
+            else 
+            {
+                result = await _progressRepo.GetCurrentExerciseAsync(userId, courseId);
+            }
+
+            return result;
         }
 
         /// <inheritdoc />

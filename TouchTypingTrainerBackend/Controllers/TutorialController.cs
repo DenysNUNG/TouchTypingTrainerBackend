@@ -90,16 +90,17 @@ namespace TouchTypingTrainerBackend.Controllers
         }
 
         /// <summary>
-        /// Gets current user exercise.
+        /// Gets current user exercise
         /// </summary>
         /// <param name="courseId">Course identifier.</param>
+        /// <param name="exerciseId">Exercise identifier.</param>
         [HttpGet("get-current-exercise")]
-        public async Task<Exercise> GetCurrentUserExercise(int courseId)
+        public async Task<IActionResult> GetCurrentUserExercise(int courseId, int? exerciseId)
         {
             string userId = _userService.GetUserId();
-            var exercise = await _tutorService.GetCurrentExerciseAsync(userId, courseId);
+            var exercise = await _tutorService.GetCurrentExerciseAsync(userId, courseId, exerciseId);
 
-            return exercise;
+            return exercise is not null? Ok(exercise) : NotFound();
         }
 
         /// <summary>

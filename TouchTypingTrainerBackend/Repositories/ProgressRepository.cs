@@ -88,5 +88,30 @@ namespace TouchTypingTrainerBackend.Repositories
 
             return courses;
         }
+
+        /// <inheritdoc />
+        public async Task<Exercise> ChooseExerciseAsync(string userId, int courseId, int exerciseId)
+        {
+            var sprocName = "dbo.ChooseExercise";
+
+            var parameters = new SqlParameter[]
+            {
+                new SqlParameter("@UserId", userId),
+                new SqlParameter("@CourseId", courseId),
+                new SqlParameter("@ExerciseId", exerciseId)
+            };
+
+            using var dr = await _sh.ExecuteReaderAsync(sprocName, parameters);
+
+            if (!dr.HasRows) 
+            {
+                return default(Exercise);
+            }
+
+            await dr.ReadAsync();
+            var exercise = Exercise.Map(dr);
+
+            return exercise;
+        }
     }
 }

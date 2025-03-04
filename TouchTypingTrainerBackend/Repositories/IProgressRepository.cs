@@ -26,5 +26,13 @@ namespace TouchTypingTrainerBackend.Repositories
         /// </summary>
         /// <param name="userId">User identifier.</param>
         Task<List<Course>> GetUserCoursesAsync(string userId);
+
+        /// <summary>
+        /// Gets an exercise by id related to user's progress scope.
+        /// </summary>
+        /// <param name="userId">User identifier.</param>
+        /// <param name="courseId">Course identifier.</param>
+        /// <param name="exerciseId">Exercise identifier.</param>
+        Task<Exercise> ChooseExerciseAsync(string userId, int courseId, int exerciseId);
     }
 }

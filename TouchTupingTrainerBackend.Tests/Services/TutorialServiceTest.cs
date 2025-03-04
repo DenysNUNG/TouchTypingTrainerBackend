@@ -217,12 +217,13 @@ namespace TouchTupingTrainerBackend.Tests.Services
             // arrange
             var userId = "1";
             var courseId = 1;
+            int? exerciseId = null;
 
             _progressRepoMock.Setup(r => r.GetCurrentExerciseAsync(userId, courseId))
                 .ReturnsAsync(_expectedExercise);
 
             // act
-            var result = await _tutorialService.GetCurrentExerciseAsync(userId, courseId);
+            var result = await _tutorialService.GetCurrentExerciseAsync(userId, courseId, exerciseId);
 
             // assert
             _progressRepoMock.Verify(r => r.GetCurrentExerciseAsync(userId, courseId), Times.Once);

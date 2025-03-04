@@ -207,20 +207,21 @@ namespace TouchTupingTrainerBackend.Tests.Controllers
             // arrange
             var courseId = 1;
             var userId = "1";
+            int? exerciseId = null;
 
             _userService.Setup(s => s.GetUserId())
                 .Returns(userId);
-            _tutorService.Setup(s => s.GetCurrentExerciseAsync(It.IsAny<string>(), courseId))
+            _tutorService.Setup(s => s.GetCurrentExerciseAsync(It.IsAny<string>(), courseId, exerciseId))
                 .ReturnsAsync(_expectedExercise);
 
             // act
-            var result = await _controller.GetCurrentUserExercise(courseId);
+            var result = await _controller.GetCurrentUserExercise(courseId, exerciseId);
 
             // assert
             result.Should().BeEquivalentTo(_expectedExercise);
 
             _userService.Verify(s => s.GetUserId(), Times.Once);
-            _tutorService.Verify(s => s.GetCurrentExerciseAsync(It.IsAny<string>(), courseId), Times.Once);
+            _tutorService.Verify(s => s.GetCurrentExerciseAsync(It.IsAny<string>(), courseId, exerciseId), Times.Once);
         }
 
         [Fact]
