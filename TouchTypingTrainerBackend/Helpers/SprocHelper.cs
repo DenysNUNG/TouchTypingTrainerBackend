@@ -8,7 +8,7 @@ namespace TouchTypingTrainerBackend.Helpers
     /// <summary>
     /// Helps repositories to deal with stored procedures.
     /// </summary>
-    public class SprocHelper : IDisposable, ISprocHelper
+    public class SprocHelper : IAsyncDisposable, ISprocHelper
     {
         /// <summary>
         /// Sql connection.
@@ -18,17 +18,12 @@ namespace TouchTypingTrainerBackend.Helpers
         /// <summary>
         /// Sql command.
         /// </summary>
-        private SqlCommand _cd;
+        private SqlCommand? _cd;
 
         /// <summary>
         /// Sql data reader.
         /// </summary>
-        private SqlDataReader _rd;
-
-        /// <summary>
-        /// Dispose flag.
-        /// </summary>
-        private bool _disposed = false;
+        private SqlDataReader? _rd;
 
         /// <summary>
         /// DI constructor.
@@ -37,42 +32,6 @@ namespace TouchTypingTrainerBackend.Helpers
         public SprocHelper(string connectionString)
         {
             _cnn = new SqlConnection(connectionString);
-        }
-
-        /// <inheritdoc />
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        /// Disposes the resources used by the SprocHelper.
-        /// </summary>
-        /// <param name="disposing">Indicates whether the method is being called
-        /// from the Dispose method.</param>
-        protected virtual async void Dispose(bool disposing)
-        {
-            if (!_disposed)
-            {
-                if (disposing)
-                {
-                    _rd?.Dispose();
-                    _cd?.Dispose();
-                    _cnn?.Dispose();
-                }
-
-                _disposed = true;
-            }
-        }
-
-        /// <summary>
-        /// Finalizer for the SprocHelper to clean up
-        /// resources if Dispose is not called.
-        /// </summary>
-        ~SprocHelper()
-        {
-            Dispose(false);
         }
 
         /// <inheritdoc />
@@ -109,6 +68,22 @@ namespace TouchTypingTrainerBackend.Helpers
             }
 
             await _cd.ExecuteNonQueryAsync();
+        }
+
+        /// <inheritdoc />
+        public async ValueTask DisposeAsync()
+        {
+            if (_rd != null)
+            {
+                await _rd.DisposeAsync();
+            }
+
+            if (_cd != null)
+            {
+                await _cd.DisposeAsync();
+            }
+
+            await _cnn.DisposeAsync();
         }
     }
 }
