@@ -14,6 +14,8 @@ namespace TouchTypingTrainerBackend.Controllers
     [ApiController]
     public class TestController : ControllerBase
     {
+        readonly ILogger<TestController> _logger;
+
         /// <summary>
         /// Test service.
         /// </summary>
@@ -34,11 +36,13 @@ namespace TouchTypingTrainerBackend.Controllers
         /// </summary>
         public TestController(ITestService testService,
             ICalcService calcService,
-            IUserService userService)
+            IUserService userService,
+            ILogger<TestController> logger)
         {
             _testService = testService;
             _calcService = calcService;
             _userService = userService;
+            _logger = logger;
         }
 
         /// <summary>
@@ -49,6 +53,7 @@ namespace TouchTypingTrainerBackend.Controllers
         [HttpGet("get-random-test-set")]
         public async Task<TestingMaterial> GetRandomTestingMaterial(int layoutId)
         {
+            _logger.LogInformation("TestController GET endpoint was called");
             return await _testService.GetRandomTestingMaterialAsync(layoutId);
         }
 
